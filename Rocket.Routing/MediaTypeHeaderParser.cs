@@ -16,7 +16,7 @@ using Rocket.Routing.Extensions;
 
 namespace Rocket.Routing
 {
-    internal sealed class MediaTypeHeaderParser : IHeaderParser
+    internal sealed class MediaTypeHeaderParser : IHeaderParser<AcceptHeader>
     {
         private const string CustomMediaTypePattern = @"^application\/(vnd\.acme(\.[a-zA-Z0-9-]{2,20})*)?(\+?(?<contenttype>[a-zA-Z0-9-\.]*?));?(\sversion=(?<version>\d+(\.\d+)*);?)?$";
 
@@ -27,7 +27,7 @@ namespace Rocket.Routing
             _settingsReader = settingsReader;
         }
 
-        public MediaType Parse(string acceptHeader)
+        public AcceptHeader Parse(string acceptHeader)
         {
             EnsureAcceptHeaderSpecified(acceptHeader);
 
@@ -37,13 +37,13 @@ namespace Rocket.Routing
             return CreateMediaTypeFromMatches(matchCollection);
         }
 
-        private static MediaType CreateMediaTypeFromMatches(IEnumerable matchCollection)
+        private static AcceptHeader CreateMediaTypeFromMatches(IEnumerable matchCollection)
         {
-            var messageMetaData = new MediaType();
+            var acceptHeader = new AcceptHeader();
 
             if (matchCollection == null)
             {
-                return messageMetaData;
+                return acceptHeader;
             }
 
             var match = matchCollection
@@ -52,13 +52,13 @@ namespace Rocket.Routing
 
             if (match == null)
             {
-                return messageMetaData;
+                return acceptHeader;
             }
 
-            messageMetaData.RequestedVersion = ParseVersion(match);
-            messageMetaData.ContentType = ParseContentType(match);
+            acceptHeader.RequestedVersion = ParseVersion(match);
+            acceptHeader.ContentType = ParseContentType(match);
 
-            return messageMetaData;
+            return acceptHeader;
         }
 
         private static double? ParseVersion(Match match)

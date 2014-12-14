@@ -1,23 +1,24 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ContentType.cs" company="Borderline Studios">
+// <copyright file="AcceptHeader.cs" company="Borderline Studios">
 //   Copyright © Borderline Studios. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the ContentType type.
+//   Defines the AcceptHeader type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Rocket.Routing
 {
-    public enum ContentType
+    internal class AcceptHeader
     {
-        Unspecified,
+        public AcceptHeader()
+        {
+            RequestedVersion = 0;
+            ContentType = ContentType.Json;
+        }
 
-        /// <summary>
-        /// Represents the MIME media type for JSON text.
-        /// </summary>
-        Json,
+        public double? RequestedVersion { get; set; }
 
-        Xml
+        public ContentType ContentType { get; set; }
     }
 }

@@ -33,6 +33,9 @@
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="Autofac.Integration.WebApi">
+      <HintPath>..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -56,7 +59,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AcceptHeader.cs" />
     <Compile Include="ContentType.cs" />
+    <Compile Include="IRequestIdProvider.cs" />
+    <Compile Include="RequestIdProvider.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\HttpRequestHeadersExtensions.cs" />
     <Compile Include="Extensions\HttpRequestMessageExtension.cs" />
@@ -64,7 +70,7 @@
     <Compile Include="ISettingsReader.cs" />
     <Compile Include="MediaTypeHeaderParser.cs" />
     <Compile Include="MessageHeadersHandler.cs" />
-    <Compile Include="MediaType.cs" />
+    <Compile Include="MediaTypeProperties.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoutingModule.cs" />
     <Compile Include="SettingsReader.cs" />
@@ -73,6 +79,7 @@
     <Compile Include="VersionedRouteAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

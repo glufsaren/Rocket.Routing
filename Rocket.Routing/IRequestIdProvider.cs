@@ -1,23 +1,18 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ContentType.cs" company="Borderline Studios">
+// <copyright file="IRequestIdProvider.cs" company="Borderline Studios">
 //   Copyright © Borderline Studios. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the ContentType type.
+//   Defines the IRequestIdProvider type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+
 namespace Rocket.Routing
 {
-    public enum ContentType
+    public interface IRequestIdProvider
     {
-        Unspecified,
-
-        /// <summary>
-        /// Represents the MIME media type for JSON text.
-        /// </summary>
-        Json,
-
-        Xml
+        Guid Get();
     }
 }

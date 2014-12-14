@@ -33,7 +33,7 @@ namespace Routing
                 .Where(t => !t.IsAbstract && typeof(ApiController).IsAssignableFrom(t))
                 .InstancePerRequest();
 
-            builder.RegisterModule<RoutingModule>();
+            builder.RegisterModule(new RoutingModule(config));
 
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);

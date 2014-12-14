@@ -9,8 +9,8 @@
 
 namespace Rocket.Routing
 {
-    internal interface IHeaderParser
+    internal interface IHeaderParser<out T>
     {
-        MediaType Parse(string acceptHeader);
+        T Parse(string headerValue);
     }
 }

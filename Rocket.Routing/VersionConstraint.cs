@@ -30,7 +30,7 @@ namespace Rocket.Routing
         }
 
         public bool Match(
-            HttpRequestMessage request,
+            HttpRequestMessage httpRequestMessage,
             IHttpRoute route,
             string parameterName,
             IDictionary<string, object> values,
@@ -41,68 +41,86 @@ namespace Rocket.Routing
                 return false;
             }
 
+            bool isMatch;
+            AcceptHeader mediaType;
+
             try
             {
-                var mediaType = ParseAcceptHeader(
-                    ResolveMediaTypeHeaderParser(request), request);
+                mediaType = ParseAcceptHeader(
+                    httpRequestMessage,
+                    ResolveMediaTypeHeaderParser(httpRequestMessage));
 
-                bool isMatch = MatchHeaderVersion(mediaType);
-
-                if (isMatch)
-                {
-                    mediaType.BindRequest(request);
-                }
-
-                return isMatch;
+                isMatch = MatchHeaderVersion(mediaType);
             }
             catch
             {
                 return false;
             }
+
+            BindMediaTypeInformationToRequest(
+                httpRequestMessage, isMatch, mediaType);
+
+            return isMatch;
         }
 
-        internal static MediaType ParseAcceptHeader(
-            IHeaderParser headerParser, HttpRequestMessage httpRequestMessage)
+        internal static AcceptHeader ParseAcceptHeader(
+            HttpRequestMessage httpRequestMessage,
+            IHeaderParser<AcceptHeader> headerParser)
         {
             var acceptHeader =
                 httpRequestMessage.TryGetHeader(AcceptHeader);
 
+            var mediaType = new AcceptHeader();
+
             return acceptHeader != null
                 ? headerParser.Parse(acceptHeader)
-                : new MediaType();
+                : mediaType;
         }
 
-        internal bool MatchHeaderVersion(MediaType mediaType)
+        internal bool MatchHeaderVersion(AcceptHeader acceptHeader)
         {
-            var matchesVersion = MatchesLatestVersion(mediaType)
-                              || MatchesVersion(mediaType);
+            return MatchesLatestVersion(acceptHeader)
+                   || MatchesVersion(acceptHeader);
+        }
 
-            if (matchesVersion)
+        private static MediaTypeHeaderParser ResolveMediaTypeHeaderParser(HttpRequestMessage httpRequestMessage)
+        {
+            return (MediaTypeHeaderParser)httpRequestMessage
+                .GetService<IHeaderParser<AcceptHeader>>();
+        }
+
+        private static IRequestIdProvider ResolveRequestIdProvider(HttpRequestMessage httpRequestMessage)
+        {
+            return httpRequestMessage.GetService<IRequestIdProvider>();
+        }
+
+        private void BindMediaTypeInformationToRequest(
+            HttpRequestMessage httpRequestMessage, bool isMatch, AcceptHeader mediaType)
+        {
+            var mediaTypeProperties = new MediaTypeProperties(httpRequestMessage);
+
+            if (isMatch)
             {
-                mediaType.ActualVersion = _version;
+                mediaTypeProperties.RequestedVersion = mediaType.RequestedVersion;
+                mediaTypeProperties.ContentType = mediaType.ContentType;
+                mediaTypeProperties.ActualVersion = _version;
             }
 
-            return matchesVersion;
+            var requestIdProvider =
+                ResolveRequestIdProvider(httpRequestMessage);
+
+            mediaTypeProperties.RequestId = requestIdProvider.Get();
         }
 
-        private static MediaTypeHeaderParser ResolveMediaTypeHeaderParser(HttpRequestMessage requestMessage)
+        private bool MatchesVersion(AcceptHeader acceptHeader)
         {
-            return (MediaTypeHeaderParser)requestMessage
-                                        .GetDependencyScope()
-                                        .GetService(typeof(IHeaderParser));
-
-            //return new MediaTypeHeaderParser(new SettingsReader());
+            return acceptHeader.RequestedVersion.HasValue
+                && acceptHeader.RequestedVersion.Value == _version;
         }
 
-        private bool MatchesVersion(MediaType mediaType)
+        private bool MatchesLatestVersion(AcceptHeader acceptHeader)
         {
-            return mediaType.RequestedVersion.HasValue
-                && mediaType.RequestedVersion.Value == _version;
-        }
-
-        private bool MatchesLatestVersion(MediaType mediaType)
-        {
-            return !mediaType.RequestedVersion.HasValue
+            return !acceptHeader.RequestedVersion.HasValue
                 && _isLatest;
         }
     }
