@@ -7,10 +7,15 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Globalization;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+
+using Rocket.Routing.Contracts;
+using Rocket.Routing.Entities;
+using Rocket.Web.Extensions;
 
 namespace Rocket.Routing
 {
@@ -20,12 +25,19 @@ namespace Rocket.Routing
             HttpRequestMessage requestMessage,
             HttpResponseMessage responseMessage)
         {
+            var vendorNameProvider = requestMessage
+                .GetService<IVendorNameProvider>();
+
             var mediaType = new MediaTypeProperties(requestMessage);
 
-            var mediaTypeString = GetMediaTypeString(mediaType);
+            var vendorName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase((vendorNameProvider.Get() ?? string.Empty).ToLower());
+            var mediaTypeString = GetMediaTypeString(mediaType, vendorName);
 
-            responseMessage.Headers.Add("X-Acme-Media-Type", mediaTypeString);
-            responseMessage.Headers.Add("X-Acme-Request-Id", mediaType.RequestId.ToString());
+            var mediaTypeHeaderName = string.Format("X-{0}-Media-Type", vendorName);
+            var requestIdHeaderName = string.Format("X-{0}-Request-Id", vendorName);
+
+            responseMessage.Headers.Add(mediaTypeHeaderName, mediaTypeString);
+            responseMessage.Headers.Add(requestIdHeaderName, mediaType.RequestId.ToString());
         }
 
         protected async override Task<HttpResponseMessage> SendAsync(
@@ -39,11 +51,11 @@ namespace Rocket.Routing
             return responseMessage;
         }
 
-        private static string GetMediaTypeString(MediaTypeProperties mediaType)
+        private static string GetMediaTypeString(MediaTypeProperties mediaType, string vendorName)
         {
             var stringBuilder = new StringBuilder();
 
-            stringBuilder.AppendFormat("acme.v{0};", mediaType.ActualVersion);
+            stringBuilder.AppendFormat("{0}.v{1};", vendorName, mediaType.ActualVersion);
 
             if (mediaType.ContentType != ContentType.Unspecified)
             {

@@ -10,9 +10,9 @@
 using System;
 using System.Net.Http;
 
-using Rocket.Routing.Extensions;
+using Rocket.Web.Extensions;
 
-namespace Rocket.Routing
+namespace Rocket.Routing.Entities
 {
     internal sealed class MediaTypeProperties
     {

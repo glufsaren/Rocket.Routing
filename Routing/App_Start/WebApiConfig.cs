@@ -2,7 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Security;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Http;
+
+using Autofac;
+using Autofac.Integration.WebApi;
+
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 
@@ -21,8 +28,6 @@ namespace Routing
 
             // Web API routes
             config.MapHttpAttributeRoutes();
-
-            config.MessageHandlers.Add(new MessageHeadersHandler());
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

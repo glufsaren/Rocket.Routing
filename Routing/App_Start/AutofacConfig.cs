@@ -14,6 +14,7 @@ using Autofac;
 using Autofac.Integration.WebApi;
 
 using Rocket.Routing;
+using Rocket.Routing.Contracts;
 
 namespace Routing
 {
@@ -22,6 +23,9 @@ namespace Routing
         public static void RegisterComponents(HttpConfiguration config)
         {
             var builder = new ContainerBuilder();
+
+            //builder
+            //    .RegisterHttpRequestMessage(config);
 
             var executingAssembly = Assembly.GetExecutingAssembly();
 
@@ -33,7 +37,13 @@ namespace Routing
                 .Where(t => !t.IsAbstract && typeof(ApiController).IsAssignableFrom(t))
                 .InstancePerRequest();
 
-            builder.RegisterModule(new RoutingModule(config));
+            builder
+                .RegisterModule(new RoutingModule(config));
+
+            builder
+                .RegisterType<VendorNameProvider>()
+                .As<IVendorNameProvider>()
+                .InstancePerRequest();
 
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);

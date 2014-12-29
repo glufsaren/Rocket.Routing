@@ -1,9 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Routing", "Routing\Routing.csproj", "{97933744-1190-415F-B420-EC909BBAD0B8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Routing", "Rocket.Routing\Rocket.Routing.csproj", "{BE3DACC9-878E-41B9-AF93-F671B26A669D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Routing.Test.Unit", "Rocket.Routing.Test.Unit\Rocket.Routing.Test.Unit.csproj", "{95195D90-D911-45A9-9BB4-001414751E7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Routing.Test.Component", "Rocket.Routing.Test.Component\Rocket.Routing.Test.Component.csproj", "{D229AD49-BF17-4EB0-B576-06D27426DA8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Core", "..\Rocket\Rocket.Core\Rocket.Core.csproj", "{5F37A3D2-570C-42B4-9B6F-C9880B4D0A43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Web", "..\Rocket\Rocket.Web\Rocket.Web.csproj", "{0E20FB35-A883-42CA-B6CA-99AB74837AAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +29,22 @@ Global
 		{BE3DACC9-878E-41B9-AF93-F671B26A669D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE3DACC9-878E-41B9-AF93-F671B26A669D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE3DACC9-878E-41B9-AF93-F671B26A669D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95195D90-D911-45A9-9BB4-001414751E7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95195D90-D911-45A9-9BB4-001414751E7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95195D90-D911-45A9-9BB4-001414751E7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95195D90-D911-45A9-9BB4-001414751E7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D229AD49-BF17-4EB0-B576-06D27426DA8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D229AD49-BF17-4EB0-B576-06D27426DA8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D229AD49-BF17-4EB0-B576-06D27426DA8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D229AD49-BF17-4EB0-B576-06D27426DA8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F37A3D2-570C-42B4-9B6F-C9880B4D0A43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F37A3D2-570C-42B4-9B6F-C9880B4D0A43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F37A3D2-570C-42B4-9B6F-C9880B4D0A43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F37A3D2-570C-42B4-9B6F-C9880B4D0A43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E20FB35-A883-42CA-B6CA-99AB74837AAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E20FB35-A883-42CA-B6CA-99AB74837AAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E20FB35-A883-42CA-B6CA-99AB74837AAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E20FB35-A883-42CA-B6CA-99AB74837AAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

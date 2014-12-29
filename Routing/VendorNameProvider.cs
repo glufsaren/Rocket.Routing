@@ -1,18 +1,21 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IRequestIdProvider.cs" company="Borderline Studios">
+// <copyright file="VendorNameProvider.cs" company="Borderline Studios">
 //   Copyright © Borderline Studios. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the IRequestIdProvider type.
+//   Defines the VendorNameProvider type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
+using Rocket.Routing.Contracts;
 
-namespace Rocket.Routing
+namespace Routing
 {
-    public interface IRequestIdProvider
+    internal sealed class VendorNameProvider : IVendorNameProvider
     {
-        Guid Get();
+        public string Get()
+        {
+            return "rocket";
+        }
     }
 }

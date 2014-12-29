@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rocket.Routing
+namespace Rocket.Routing.Entities
 {
     internal class AcceptHeader
     {
@@ -20,5 +20,22 @@ namespace Rocket.Routing
         public double? RequestedVersion { get; set; }
 
         public ContentType ContentType { get; set; }
+
+        internal bool MatchHeaderVersion(double version, bool isLatest)
+        {
+            return MatchesLatestVersion(isLatest)
+                   || MatchesVersion(version);
+        }
+
+        private bool MatchesVersion(double version)
+        {
+            return RequestedVersion.HasValue
+                && RequestedVersion.Value == version;
+        }
+
+        private bool MatchesLatestVersion(bool isLatest)
+        {
+            return !RequestedVersion.HasValue && isLatest;
+        }
     }
 }

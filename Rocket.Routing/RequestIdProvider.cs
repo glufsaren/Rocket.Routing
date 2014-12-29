@@ -1,13 +1,26 @@
-﻿using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="RequestIdProvider.cs" company="Borderline Studios">
+//   Copyright © Borderline Studios. All rights reserved.
+// </copyright>
+// <summary>
+//   Defines the RequestIdProvider type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System;
 using System.Net.Http;
+using System.Web;
+
+using Rocket.Routing.Contracts;
 
 namespace Rocket.Routing
 {
-    public class RequestIdProvider : IRequestIdProvider
+    public sealed class RequestIdProvider : IRequestIdProvider
     {
-        private readonly HttpRequestMessage _httpRequestMessage;
+        private HttpRequestMessage _httpRequestMessage;
 
-        public RequestIdProvider(HttpRequestMessage httpRequestMessage)
+        public RequestIdProvider(
+            HttpRequestMessage httpRequestMessage)
         {
             _httpRequestMessage = httpRequestMessage;
         }

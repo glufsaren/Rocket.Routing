@@ -7,17 +7,23 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rocket.Routing
+namespace Rocket.Routing.Entities
 {
     public enum ContentType
     {
+        /// <summary>
+        /// Unspecified media type format.
+        /// </summary>
         Unspecified,
 
         /// <summary>
-        /// Represents the MIME media type for JSON text.
+        /// Represents the MIME media type for JSON content.
         /// </summary>
         Json,
 
+        /// <summary>
+        /// Represents the MIME media type for XML content.
+        /// </summary>
         Xml
     }
 }

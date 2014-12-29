@@ -8,10 +8,14 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 using Autofac;
 using Autofac.Integration.WebApi;
+
+using Rocket.Routing.Contracts;
+using Rocket.Routing.Entities;
 
 namespace Rocket.Routing
 {
@@ -19,21 +23,38 @@ namespace Rocket.Routing
     {
         private readonly HttpConfiguration _httpConfiguration;
 
-        public RoutingModule(HttpConfiguration httpConfiguration)
+        public RoutingModule(
+            HttpConfiguration httpConfiguration)
         {
             _httpConfiguration = httpConfiguration;
         }
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder
-                .RegisterHttpRequestMessage(_httpConfiguration);
+            _httpConfiguration.MessageHandlers.Add(new MessageHeadersHandler());
+
+            //builder
+            //    .RegisterHttpRequestMessage(_httpConfiguration);
+
+            //builder.RegisterInstance(_httpConfiguration).As<HttpConfiguration>();
+
+            //builder
+            //    .RegisterHttpRequestMessage(_httpConfiguration);
+
+            //builder.RegisterHttpRequestMessage(
+            //    GlobalConfiguration.Configuration);
+
+           // builder.Register(c =>
+           //            c.Resolve<HttpRequestMessage>()
+           //             .GetConfiguration())
+           //.As<HttpConfiguration>();
+
+
+            //builder
+            //    .RegisterType<HttpRequestMessage>();
 
             builder
-                .RegisterType<HttpRequestMessage>();
-
-            builder
-                .RegisterType<MediaTypeHeaderParser>()
+                .RegisterType<AcceptHeaderParser>()
                 .As<IHeaderParser<AcceptHeader>>()
                 .InstancePerRequest();
 
@@ -43,7 +64,20 @@ namespace Rocket.Routing
                 .InstancePerRequest();
 
             builder
-                .Register(c => new RequestIdProvider(c.Resolve<HttpRequestMessage>()))
+                .RegisterType<VendorNameProvider>()
+                .As<IVendorNameProvider>()
+                .InstancePerRequest();
+
+            //builder
+            //    .Register(c => new VersionComparer(
+            //        c.Resolve<IHeaderParser<AcceptHeader>>(),
+            //        c.Resolve<IRequestIdProvider>(),
+            //        c.Resolve<HttpRequestMessage>()))
+            //    .As<IVersionComparer>()
+            //    .InstancePerRequest();
+
+            builder
+                .Register(c => new RequestIdProvider(builder.CurrentRequest()))
                 .As<IRequestIdProvider>()
                 .InstancePerRequest();
         }

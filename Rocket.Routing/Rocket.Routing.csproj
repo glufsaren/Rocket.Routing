@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Rocket.Routing</RootNamespace>
     <AssemblyName>Rocket.Routing</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,9 +49,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -59,28 +65,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AcceptHeader.cs" />
-    <Compile Include="ContentType.cs" />
-    <Compile Include="IRequestIdProvider.cs" />
+    <Compile Include="ContainerBuilderExtensions.cs" />
+    <Compile Include="Contracts\IHeaderParser.cs" />
+    <Compile Include="Contracts\IRequestIdProvider.cs" />
+    <Compile Include="Contracts\ISettingsReader.cs" />
+    <Compile Include="Contracts\IVendorNameProvider.cs" />
+    <Compile Include="Contracts\IVersionedRouteMetaStore.cs" />
+    <Compile Include="Entities\AcceptHeader.cs" />
+    <Compile Include="Entities\ContentType.cs" />
+    <Compile Include="Entities\MediaTypeProperties.cs" />
     <Compile Include="RequestIdProvider.cs" />
-    <Compile Include="Extensions\EnumerableExtensions.cs" />
-    <Compile Include="Extensions\HttpRequestHeadersExtensions.cs" />
-    <Compile Include="Extensions\HttpRequestMessageExtension.cs" />
-    <Compile Include="IHeaderParser.cs" />
-    <Compile Include="ISettingsReader.cs" />
-    <Compile Include="MediaTypeHeaderParser.cs" />
+    <Compile Include="AcceptHeaderParser.cs" />
     <Compile Include="MessageHeadersHandler.cs" />
-    <Compile Include="MediaTypeProperties.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoutingModule.cs" />
     <Compile Include="SettingsReader.cs" />
-    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="VendorNameProvider.cs" />
     <Compile Include="VersionConstraint.cs" />
     <Compile Include="VersionedRouteAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Rocket\Rocket.Core\Rocket.Core.csproj">
+      <Project>{5f37a3d2-570c-42b4-9b6f-c9880b4d0a43}</Project>
+      <Name>Rocket.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Rocket\Rocket.Web\Rocket.Web.csproj">
+      <Project>{0e20fb35-a883-42ca-b6ca-99ab74837aaa}</Project>
+      <Name>Rocket.Web</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

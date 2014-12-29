@@ -10,6 +10,8 @@
 using System;
 using System.Configuration;
 
+using Rocket.Routing.Contracts;
+
 namespace Rocket.Routing
 {
     /// <summary>

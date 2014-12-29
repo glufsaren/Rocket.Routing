@@ -12,19 +12,26 @@ using System.Collections;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-using Rocket.Routing.Extensions;
+using Rocket.Core.Extensions;
+using Rocket.Routing.Contracts;
+using Rocket.Routing.Entities;
 
 namespace Rocket.Routing
 {
-    internal sealed class MediaTypeHeaderParser : IHeaderParser<AcceptHeader>
+    // TODO: Felhantering
+    internal sealed class AcceptHeaderParser : IHeaderParser<AcceptHeader>
     {
-        private const string CustomMediaTypePattern = @"^application\/(vnd\.acme(\.[a-zA-Z0-9-]{2,20})*)?(\+?(?<contenttype>[a-zA-Z0-9-\.]*?));?(\sversion=(?<version>\d+(\.\d+)*);?)?$";
+        private const string CustomMediaTypePattern = @"^application\/(vnd\.#VENDOR_NAME#(\.[a-zA-Z0-9-]{2,20})*)?(\+?(?<contenttype>[a-zA-Z0-9-\.]*?));?(\sversion=(?<version>\d+(\.\d+)*);?)?$";
 
         private readonly ISettingsReader _settingsReader;
+        private readonly IVendorNameProvider _vendorNameProvider;
 
-        public MediaTypeHeaderParser(ISettingsReader settingsReader)
+        public AcceptHeaderParser(
+            ISettingsReader settingsReader,
+            IVendorNameProvider vendorNameProvider)
         {
             _settingsReader = settingsReader;
+            _vendorNameProvider = vendorNameProvider;
         }
 
         public AcceptHeader Parse(string acceptHeader)
@@ -110,9 +117,13 @@ namespace Rocket.Routing
             var pattern = _settingsReader
                 .GetAppSetting<string>("MediaTypePattern");
 
-            return string.IsNullOrWhiteSpace(pattern)
+            var matchPattern = string.IsNullOrWhiteSpace(pattern)
                     ? fallbackPattern
                     : pattern;
+
+            var vendorName = (_vendorNameProvider.Get() ?? string.Empty).ToLower();
+
+            return matchPattern.Replace("#VENDOR_NAME#", vendorName);
         }
     }
 }
