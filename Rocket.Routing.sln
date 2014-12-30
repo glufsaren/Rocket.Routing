@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Core", "..\Rocket\Ro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Web", "..\Rocket\Rocket.Web\Rocket.Web.csproj", "{0E20FB35-A883-42CA-B6CA-99AB74837AAA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Test", "..\rocket\Rocket.Test\Rocket.Test.csproj", "{3AD629B7-6D2F-42AB-920B-CD847AE97020}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{0E20FB35-A883-42CA-B6CA-99AB74837AAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E20FB35-A883-42CA-B6CA-99AB74837AAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E20FB35-A883-42CA-B6CA-99AB74837AAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AD629B7-6D2F-42AB-920B-CD847AE97020}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AD629B7-6D2F-42AB-920B-CD847AE97020}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AD629B7-6D2F-42AB-920B-CD847AE97020}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AD629B7-6D2F-42AB-920B-CD847AE97020}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

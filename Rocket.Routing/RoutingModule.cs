@@ -77,6 +77,14 @@ namespace Rocket.Routing
             //    .InstancePerRequest();
 
             builder
+                .Register(
+                c => new AcceptHeaderStore(
+                    c.Resolve<IRequestIdProvider>(),
+                    builder.CurrentRequest()))
+                .As<IAcceptHeaderStore>()
+                .InstancePerRequest();
+
+            builder
                 .Register(c => new RequestIdProvider(builder.CurrentRequest()))
                 .As<IRequestIdProvider>()
                 .InstancePerRequest();

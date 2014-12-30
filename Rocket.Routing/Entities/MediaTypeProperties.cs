@@ -82,7 +82,7 @@ namespace Rocket.Routing.Entities
             }
         }
 
-        public bool IsMatched
+        public bool Matched
         {
             get
             {

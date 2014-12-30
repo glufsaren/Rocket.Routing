@@ -9,7 +9,7 @@
 
 namespace Rocket.Routing.Entities
 {
-    internal class AcceptHeader
+    public class AcceptHeader
     {
         public AcceptHeader()
         {
@@ -17,14 +17,23 @@ namespace Rocket.Routing.Entities
             ContentType = ContentType.Json;
         }
 
-        public double? RequestedVersion { get; set; }
-
         public ContentType ContentType { get; set; }
 
-        internal bool MatchHeaderVersion(double version, bool isLatest)
+        public double? RequestedVersion { get; set; }
+
+        public double ActualVersion { get; private set; }
+
+        public bool Matches { get; private set; }
+
+        public void MatchHeaderVersion(double version, bool isLatest)
         {
-            return MatchesLatestVersion(isLatest)
+            Matches = MatchesLatestVersion(isLatest)
                    || MatchesVersion(version);
+
+            if (Matches)
+            {
+                ActualVersion = version;
+            }
         }
 
         private bool MatchesVersion(double version)

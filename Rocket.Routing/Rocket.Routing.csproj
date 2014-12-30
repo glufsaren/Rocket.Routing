@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AcceptHeaderStore.cs" />
     <Compile Include="ContainerBuilderExtensions.cs" />
     <Compile Include="Contracts\IHeaderParser.cs" />
     <Compile Include="Contracts\IRequestIdProvider.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Entities\AcceptHeader.cs" />
     <Compile Include="Entities\ContentType.cs" />
     <Compile Include="Entities\MediaTypeProperties.cs" />
+    <Compile Include="IAcceptHeaderStore.cs" />
     <Compile Include="RequestIdProvider.cs" />
     <Compile Include="AcceptHeaderParser.cs" />
     <Compile Include="MessageHeadersHandler.cs" />
