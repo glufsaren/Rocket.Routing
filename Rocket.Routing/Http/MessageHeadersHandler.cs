@@ -13,11 +13,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Rocket.Routing.Contracts;
 using Rocket.Routing.Entities;
 using Rocket.Web.Extensions;
 
-namespace Rocket.Routing
+namespace Rocket.Routing.Http
 {
     public class MessageHeadersHandler : DelegatingHandler
     {

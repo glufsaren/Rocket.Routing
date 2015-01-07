@@ -9,11 +9,8 @@
 
 using System;
 using System.Net.Http;
-using System.Web;
 
-using Rocket.Routing.Contracts;
-
-namespace Rocket.Routing
+namespace Rocket.Routing.Providers
 {
     public sealed class RequestIdProvider : IRequestIdProvider
     {

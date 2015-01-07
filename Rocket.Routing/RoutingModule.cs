@@ -14,8 +14,11 @@ using System.Web.Http;
 using Autofac;
 using Autofac.Integration.WebApi;
 
-using Rocket.Routing.Contracts;
+using Rocket.Routing.Configuration;
 using Rocket.Routing.Entities;
+using Rocket.Routing.Extensions;
+using Rocket.Routing.Http;
+using Rocket.Routing.Providers;
 
 namespace Rocket.Routing
 {

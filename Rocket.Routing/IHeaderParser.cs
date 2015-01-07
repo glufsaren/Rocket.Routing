@@ -1,16 +1,16 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IVendorNameProvider.cs" company="Borderline Studios">
+// <copyright file="IHeaderParser.cs" company="Borderline Studios">
 //   Copyright © Borderline Studios. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the IVendorNameProvider type.
+//   Defines the IHeaderParser type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rocket.Routing.Contracts
+namespace Rocket.Routing
 {
-    public interface IVendorNameProvider
+    public interface IHeaderParser<out T>
     {
-        string Get();
+        T Parse(string headerValue);
     }
 }

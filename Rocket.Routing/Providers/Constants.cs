@@ -1,16 +1,16 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IHeaderParser.cs" company="Borderline Studios">
+// <copyright file="Constants.cs" company="Borderline Studios">
 //   Copyright © Borderline Studios. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the IHeaderParser type.
+//   Defines the Constants type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rocket.Routing.Contracts
+namespace Rocket.Routing.Providers
 {
-    public interface IHeaderParser<out T>
+    internal static class Constants
     {
-        T Parse(string headerValue);
+        public const string DefaultVendorName = "acme";
     }
 }

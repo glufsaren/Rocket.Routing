@@ -12,7 +12,7 @@ using System.Web;
 
 using Autofac;
 
-namespace Rocket.Routing
+namespace Rocket.Routing.Extensions
 {
     public static class ContainerBuilderExtensions
     {

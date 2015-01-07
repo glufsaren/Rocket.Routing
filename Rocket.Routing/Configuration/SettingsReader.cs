@@ -10,9 +10,7 @@
 using System;
 using System.Configuration;
 
-using Rocket.Routing.Contracts;
-
-namespace Rocket.Routing
+namespace Rocket.Routing.Configuration
 {
     /// <summary>
     /// Class used for reading application settings.

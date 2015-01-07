@@ -9,7 +9,7 @@
 
 using System;
 
-namespace Rocket.Routing.Contracts
+namespace Rocket.Routing
 {
     /// <summary>
     /// Defines types that implement functionality for reading application settings.

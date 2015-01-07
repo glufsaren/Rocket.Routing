@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Http.Routing;
 
-using Rocket.Routing.Contracts;
 using Rocket.Routing.Entities;
 using Rocket.Web.Extensions;
 

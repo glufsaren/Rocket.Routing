@@ -9,10 +9,9 @@
 
 using System.Net.Http;
 
-using Rocket.Routing.Contracts;
 using Rocket.Routing.Entities;
 
-namespace Rocket.Routing
+namespace Rocket.Routing.Http
 {
     public class AcceptHeaderStore : IAcceptHeaderStore
     {

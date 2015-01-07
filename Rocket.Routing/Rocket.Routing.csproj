@@ -65,24 +65,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AcceptHeaderStore.cs" />
-    <Compile Include="ContainerBuilderExtensions.cs" />
-    <Compile Include="Contracts\IHeaderParser.cs" />
-    <Compile Include="Contracts\IRequestIdProvider.cs" />
-    <Compile Include="Contracts\ISettingsReader.cs" />
-    <Compile Include="Contracts\IVendorNameProvider.cs" />
-    <Compile Include="Contracts\IVersionedRouteMetaStore.cs" />
+    <Compile Include="Configuration\SettingsReader.cs" />
     <Compile Include="Entities\AcceptHeader.cs" />
     <Compile Include="Entities\ContentType.cs" />
     <Compile Include="Entities\MediaTypeProperties.cs" />
+    <Compile Include="Extensions\ContainerBuilderExtensions.cs" />
+    <Compile Include="Http\AcceptHeaderParser.cs" />
+    <Compile Include="Http\AcceptHeaderStore.cs" />
+    <Compile Include="Http\MessageHeadersHandler.cs" />
     <Compile Include="IAcceptHeaderStore.cs" />
-    <Compile Include="RequestIdProvider.cs" />
-    <Compile Include="AcceptHeaderParser.cs" />
-    <Compile Include="MessageHeadersHandler.cs" />
+    <Compile Include="IHeaderParser.cs" />
+    <Compile Include="IRequestIdProvider.cs" />
+    <Compile Include="ISettingsReader.cs" />
+    <Compile Include="IVendorNameProvider.cs" />
+    <Compile Include="Providers\Constants.cs" />
+    <Compile Include="Providers\RequestIdProvider.cs" />
+    <Compile Include="Providers\VendorNameProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoutingModule.cs" />
-    <Compile Include="SettingsReader.cs" />
-    <Compile Include="VendorNameProvider.cs" />
     <Compile Include="VersionConstraint.cs" />
     <Compile Include="VersionedRouteAttribute.cs" />
   </ItemGroup>

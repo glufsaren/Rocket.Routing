@@ -14,7 +14,6 @@ using Autofac;
 using Autofac.Integration.WebApi;
 
 using Rocket.Routing;
-using Rocket.Routing.Contracts;
 
 namespace Routing
 {

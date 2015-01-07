@@ -9,7 +9,7 @@
 
 using System;
 
-namespace Rocket.Routing.Contracts
+namespace Rocket.Routing
 {
     public interface IRequestIdProvider
     {

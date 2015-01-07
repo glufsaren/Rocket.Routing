@@ -1,9 +1,9 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MediaTypeHeaderParser.cs" company="Borderline Studios">
+// <copyright file="AcceptHeaderParser.cs" company="Borderline Studios">
 //   Copyright © Borderline Studios. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the MediaTypeHeaderParser type.
+//   Defines the AcceptHeaderParser type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -13,10 +13,10 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 using Rocket.Core.Extensions;
-using Rocket.Routing.Contracts;
 using Rocket.Routing.Entities;
+using Rocket.Routing.Providers;
 
-namespace Rocket.Routing
+namespace Rocket.Routing.Http
 {
     // TODO: Felhantering
     internal sealed class AcceptHeaderParser : IHeaderParser<AcceptHeader>
@@ -121,9 +121,19 @@ namespace Rocket.Routing
                     ? fallbackPattern
                     : pattern;
 
-            var vendorName = (_vendorNameProvider.Get() ?? string.Empty).ToLower();
+            return InsertVendorName(matchPattern);
+        }
 
-            return matchPattern.Replace("#VENDOR_NAME#", vendorName);
+        private string InsertVendorName(string matchPattern)
+        {
+            var vendorName = _vendorNameProvider.Get();
+
+            vendorName = !string.IsNullOrWhiteSpace(vendorName)
+                ? vendorName
+                : Constants.DefaultVendorName;
+
+            return matchPattern
+                .Replace("#VENDOR_NAME#", vendorName.ToLower());
         }
     }
 }
