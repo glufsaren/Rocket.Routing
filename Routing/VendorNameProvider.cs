@@ -7,13 +7,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Rocket.Routing;
+using Rocket.Routing.Providers;
 
 namespace Routing
 {
-    internal sealed class VendorNameProvider : IVendorNameProvider
+    internal sealed class VendorNameProvider : DefaultVendorNameProvider
     {
-        public string Get()
+        public override string GetName()
         {
             return "rocket";
         }

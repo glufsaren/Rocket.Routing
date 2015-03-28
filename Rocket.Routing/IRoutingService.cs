@@ -1,19 +1,19 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="VendorNameProvider.cs" company="Borderline Studios">
+// <copyright file="IRoutingService.cs" company="Borderline Studios">
 //   Copyright © Borderline Studios. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the VendorNameProvider type.
+//   Defines the IRoutingService type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rocket.Routing.Providers
+namespace Rocket.Routing
 {
-    internal sealed class VendorNameProvider : IVendorNameProvider
+    public interface IRoutingService
     {
-        public string Get()
-        {
-            return "acme";
-        }
+        bool Match(
+            string acceptHeaderValue,
+            double version,
+            bool isLatest);
     }
 }

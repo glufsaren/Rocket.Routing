@@ -72,6 +72,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Rocket\Rocket.Core\Rocket.Core.csproj">
+      <Project>{5F37A3D2-570C-42B4-9B6F-C9880B4D0A43}</Project>
+      <Name>Rocket.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\rocket\Rocket.Test\Rocket.Test.csproj">
       <Project>{3ad629b7-6d2f-42ab-920b-cd847ae97020}</Project>
       <Name>Rocket.Test</Name>

@@ -37,6 +37,9 @@
     <Reference Include="Autofac.Integration.WebApi">
       <HintPath>..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
     </Reference>
+    <Reference Include="JetBrains.Annotations">
+      <HintPath>..\packages\ReSharper.Annotations.7.1.3.130415\lib\net\JetBrains.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -65,24 +68,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\SettingsReader.cs" />
+    <Compile Include="AcceptHeaderPatternProvider.cs" />
     <Compile Include="Entities\AcceptHeader.cs" />
     <Compile Include="Entities\ContentType.cs" />
-    <Compile Include="Entities\MediaTypeProperties.cs" />
+    <Compile Include="Entities\MediaType.cs" />
+    <Compile Include="Entities\RequestPropertiesMediaType.cs" />
     <Compile Include="Extensions\ContainerBuilderExtensions.cs" />
     <Compile Include="Http\AcceptHeaderParser.cs" />
-    <Compile Include="Http\AcceptHeaderStore.cs" />
+    <Compile Include="Http\RequestPropertiesAcceptHeaderStore.cs" />
     <Compile Include="Http\MessageHeadersHandler.cs" />
+    <Compile Include="IAcceptHeaderPatternProvider.cs" />
     <Compile Include="IAcceptHeaderStore.cs" />
     <Compile Include="IHeaderParser.cs" />
     <Compile Include="IRequestIdProvider.cs" />
-    <Compile Include="ISettingsReader.cs" />
+    <Compile Include="IRoutingService.cs" />
     <Compile Include="IVendorNameProvider.cs" />
-    <Compile Include="Providers\Constants.cs" />
     <Compile Include="Providers\RequestIdProvider.cs" />
-    <Compile Include="Providers\VendorNameProvider.cs" />
+    <Compile Include="Providers\DefaultVendorNameProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoutingModule.cs" />
+    <Compile Include="RoutingService.cs" />
     <Compile Include="VersionConstraint.cs" />
     <Compile Include="VersionedRouteAttribute.cs" />
   </ItemGroup>

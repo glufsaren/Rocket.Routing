@@ -35,7 +35,8 @@ namespace Rocket.Routing
                            {
                                { 
                                    "version",
-                                   new VersionConstraint(_version, _isLatest) }
+                                   new VersionConstraint(_version, _isLatest) 
+                               }
                            };
             }
         }

@@ -41,9 +41,7 @@ namespace Rocket.Routing.Test.Unit
                 new Mock<IAcceptHeaderStore>(MockBehavior.Strict);
 
             var matches = versionConstraint.Match(
-                httpRequestMessage,
-                headerParser.Object,
-                acceptHeaderStore.Object);
+                httpRequestMessage.Headers);
 
             matches.ShouldBeFalse();
         }
@@ -83,9 +81,7 @@ namespace Rocket.Routing.Test.Unit
             protected override void Act()
             {
                 _matches = _versionConstraint.Match(
-                                        _httpRequestMessage,
-                                        _headerParser.Object,
-                                        _acceptHeaderStore.Object);
+                                        _httpRequestMessage.Headers);
             }
 
             [Test]

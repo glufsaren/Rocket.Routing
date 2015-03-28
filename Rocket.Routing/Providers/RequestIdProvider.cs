@@ -14,7 +14,7 @@ namespace Rocket.Routing.Providers
 {
     public sealed class RequestIdProvider : IRequestIdProvider
     {
-        private HttpRequestMessage _httpRequestMessage;
+        private readonly HttpRequestMessage _httpRequestMessage;
 
         public RequestIdProvider(
             HttpRequestMessage httpRequestMessage)

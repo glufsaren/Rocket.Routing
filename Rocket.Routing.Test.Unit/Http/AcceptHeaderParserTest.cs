@@ -25,14 +25,11 @@ namespace Rocket.Routing.Test.Unit.Http
         [ExpectedException(typeof(ArgumentNullException))]
         public void When_header_value_is_null_or_empty(string headerValue)
         {
-            var settingsReader = 
-                new Mock<ISettingsReader>(MockBehavior.Strict);
-
-            var vendorNameProvider = 
-                new Mock<IVendorNameProvider>(MockBehavior.Strict);
+            var acceptHeaderPatternProvider =
+                new Mock<IAcceptHeaderPatternProvider>(MockBehavior.Strict);
 
             var acceptHeaderParser = new AcceptHeaderParser(
-                settingsReader.Object, vendorNameProvider.Object);
+                acceptHeaderPatternProvider.Object);
 
             acceptHeaderParser.Parse(headerValue);
         }

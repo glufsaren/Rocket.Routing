@@ -11,6 +11,10 @@ namespace Rocket.Routing
 {
     public interface IVendorNameProvider
     {
-        string Get();
+        string GetName();
+
+        string GetPlaceHolder();
+
+        string GetPattern();
     }
 }

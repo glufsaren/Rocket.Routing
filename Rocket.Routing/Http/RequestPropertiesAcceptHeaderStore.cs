@@ -13,14 +13,14 @@ using Rocket.Routing.Entities;
 
 namespace Rocket.Routing.Http
 {
-    public class AcceptHeaderStore : IAcceptHeaderStore
+    public class RequestPropertiesAcceptHeaderStore : IAcceptHeaderStore
     {
         private readonly IRequestIdProvider _requestIdProvider;
         private readonly HttpRequestMessage _httpRequestMessage;
 
-        public AcceptHeaderStore(
-            IRequestIdProvider requestIdProvider,
-            HttpRequestMessage httpRequestMessage)
+        public RequestPropertiesAcceptHeaderStore(
+                        IRequestIdProvider requestIdProvider,
+                        HttpRequestMessage httpRequestMessage)
         {
             _requestIdProvider = requestIdProvider;
             _httpRequestMessage = httpRequestMessage;
@@ -28,8 +28,8 @@ namespace Rocket.Routing.Http
 
         public void Set(AcceptHeader acceptHeader)
         {
-            var mediaTypeProperties = 
-                new MediaTypeProperties(_httpRequestMessage);
+            var mediaTypeProperties =
+                new RequestPropertiesMediaType(_httpRequestMessage);
 
             if (acceptHeader.Matches)
             {
@@ -40,6 +40,11 @@ namespace Rocket.Routing.Http
             }
 
             mediaTypeProperties.RequestId = _requestIdProvider.Get();
+        }
+
+        public MediaType Get()
+        {
+            return new RequestPropertiesMediaType(_httpRequestMessage);
         }
     }
 }

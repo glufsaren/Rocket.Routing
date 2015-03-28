@@ -9,9 +9,10 @@
 
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Web.Http.Dependencies;
 using System.Web.Http.Routing;
 
-using Rocket.Routing.Entities;
 using Rocket.Web.Extensions;
 
 namespace Rocket.Routing
@@ -30,6 +31,8 @@ namespace Rocket.Routing
             _version = version;
         }
 
+        public IRoutingService RoutingService { get; set; }
+
         public bool Match(
             HttpRequestMessage httpRequestMessage,
             IHttpRoute route,
@@ -42,48 +45,28 @@ namespace Rocket.Routing
                 return false;
             }
 
+            var dependencyScope =
+                httpRequestMessage.GetDependencyScope();
+
+            BuildUp(dependencyScope);
+
             return Match(
-                httpRequestMessage,
-                GetHeaderParser(httpRequestMessage),
-                GetAcceptHeaderStore(httpRequestMessage));
+                httpRequestMessage.Headers);
         }
 
-        internal bool Match(
-            HttpRequestMessage httpRequestMessage,
-            IHeaderParser<AcceptHeader> headerParser,
-            IAcceptHeaderStore acceptHeaderStore)
+        internal bool Match(HttpRequestHeaders httpRequestHeaders)
         {
             var acceptHeaderValue =
-                httpRequestMessage.TryGetHeader(AcceptHeader);
+                httpRequestHeaders.TryGetHeader(AcceptHeader);
 
-            var acceptHeader =
-                headerParser.Parse(acceptHeaderValue);
-
-            if (acceptHeader == null)
-            {
-                return false;
-            }
-
-            acceptHeader
-                .MatchHeaderVersion(_version, _isLatest);
-
-            acceptHeaderStore.Set(acceptHeader);
-
-            return acceptHeader.Matches;
+            return RoutingService.Match(
+                acceptHeaderValue, _version, _isLatest);
         }
 
-        private static IHeaderParser<AcceptHeader> GetHeaderParser(
-            HttpRequestMessage httpRequestMessage)
+        private void BuildUp(IDependencyScope dependencyScope)
         {
-            return httpRequestMessage
-                .GetService<IHeaderParser<AcceptHeader>>();
-        }
-
-        private static IAcceptHeaderStore GetAcceptHeaderStore(
-            HttpRequestMessage httpRequestMessage)
-        {
-            return httpRequestMessage
-                .GetService<IAcceptHeaderStore>();
+            RoutingService = dependencyScope
+                .GetService<IRoutingService>();
         }
     }
 }

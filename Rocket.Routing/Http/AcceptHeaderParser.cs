@@ -14,24 +14,18 @@ using System.Text.RegularExpressions;
 
 using Rocket.Core.Extensions;
 using Rocket.Routing.Entities;
-using Rocket.Routing.Providers;
 
 namespace Rocket.Routing.Http
 {
     // TODO: Felhantering
     internal sealed class AcceptHeaderParser : IHeaderParser<AcceptHeader>
     {
-        private const string CustomMediaTypePattern = @"^application\/(vnd\.#VENDOR_NAME#(\.[a-zA-Z0-9-]{2,20})*)?(\+?(?<contenttype>[a-zA-Z0-9-\.]*?));?(\sversion=(?<version>\d+(\.\d+)*);?)?$";
-
-        private readonly ISettingsReader _settingsReader;
-        private readonly IVendorNameProvider _vendorNameProvider;
+        private readonly IAcceptHeaderPatternProvider _acceptHeaderPatternProvider;
 
         public AcceptHeaderParser(
-            ISettingsReader settingsReader,
-            IVendorNameProvider vendorNameProvider)
+            IAcceptHeaderPatternProvider acceptHeaderPatternProvider)
         {
-            _settingsReader = settingsReader;
-            _vendorNameProvider = vendorNameProvider;
+            _acceptHeaderPatternProvider = acceptHeaderPatternProvider;
         }
 
         public AcceptHeader Parse(string acceptHeader)
@@ -106,34 +100,12 @@ namespace Rocket.Routing.Http
 
         private MatchCollection MatchCustomMediaTypeHeader(string acceptHeader)
         {
+            var pattern = _acceptHeaderPatternProvider.Get();
+
             MatchCollection matches =
-                Regex.Matches(acceptHeader, GetPattern(CustomMediaTypePattern));
+                Regex.Matches(acceptHeader, pattern);
 
             return !matches.IsNullOrEmpty() ? matches : null;
-        }
-
-        private string GetPattern(string fallbackPattern)
-        {
-            var pattern = _settingsReader
-                .GetAppSetting<string>("MediaTypePattern");
-
-            var matchPattern = string.IsNullOrWhiteSpace(pattern)
-                    ? fallbackPattern
-                    : pattern;
-
-            return InsertVendorName(matchPattern);
-        }
-
-        private string InsertVendorName(string matchPattern)
-        {
-            var vendorName = _vendorNameProvider.Get();
-
-            vendorName = !string.IsNullOrWhiteSpace(vendorName)
-                ? vendorName
-                : Constants.DefaultVendorName;
-
-            return matchPattern
-                .Replace("#VENDOR_NAME#", vendorName.ToLower());
         }
     }
 }

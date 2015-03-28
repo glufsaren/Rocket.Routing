@@ -1,16 +1,16 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Constants.cs" company="Borderline Studios">
+// <copyright file="IAcceptHeaderPatternProvider.cs" company="Borderline Studios">
 //   Copyright © Borderline Studios. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the Constants type.
+//   Defines the IAcceptHeaderPatternProvider type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rocket.Routing.Providers
+namespace Rocket.Routing
 {
-    internal static class Constants
+    public interface IAcceptHeaderPatternProvider
     {
-        public const string DefaultVendorName = "acme";
+        string Get();
     }
 }

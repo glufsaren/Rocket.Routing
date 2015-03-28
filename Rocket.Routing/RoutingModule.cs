@@ -14,7 +14,7 @@ using System.Web.Http;
 using Autofac;
 using Autofac.Integration.WebApi;
 
-using Rocket.Routing.Configuration;
+using Rocket.Core.Configuration;
 using Rocket.Routing.Entities;
 using Rocket.Routing.Extensions;
 using Rocket.Routing.Http;
@@ -34,7 +34,8 @@ namespace Rocket.Routing
 
         protected override void Load(ContainerBuilder builder)
         {
-            _httpConfiguration.MessageHandlers.Add(new MessageHeadersHandler());
+            _httpConfiguration.MessageHandlers
+                .Add(new MessageHeadersHandler());
 
             //builder
             //    .RegisterHttpRequestMessage(_httpConfiguration);
@@ -67,7 +68,7 @@ namespace Rocket.Routing
                 .InstancePerRequest();
 
             builder
-                .RegisterType<VendorNameProvider>()
+                .RegisterType<DefaultVendorNameProvider>()
                 .As<IVendorNameProvider>()
                 .InstancePerRequest();
 
@@ -81,7 +82,7 @@ namespace Rocket.Routing
 
             builder
                 .Register(
-                c => new AcceptHeaderStore(
+                c => new RequestPropertiesAcceptHeaderStore(
                     c.Resolve<IRequestIdProvider>(),
                     builder.CurrentRequest()))
                 .As<IAcceptHeaderStore>()

@@ -27,9 +27,12 @@ namespace Rocket.Routing.Http
             var vendorNameProvider = requestMessage
                 .GetService<IVendorNameProvider>();
 
-            var mediaType = new MediaTypeProperties(requestMessage);
+            var acceptHeaderStore = requestMessage
+                .GetService<IAcceptHeaderStore>();
 
-            var vendorName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase((vendorNameProvider.Get() ?? string.Empty).ToLower());
+            var mediaType = acceptHeaderStore.Get();
+
+            var vendorName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase((vendorNameProvider.GetName() ?? string.Empty).ToLower());
             var mediaTypeString = GetMediaTypeString(mediaType, vendorName);
 
             var mediaTypeHeaderName = string.Format("X-{0}-Media-Type", vendorName);
@@ -50,7 +53,7 @@ namespace Rocket.Routing.Http
             return responseMessage;
         }
 
-        private static string GetMediaTypeString(MediaTypeProperties mediaType, string vendorName)
+        private static string GetMediaTypeString(MediaType mediaType, string vendorName)
         {
             var stringBuilder = new StringBuilder();
 

@@ -14,5 +14,7 @@ namespace Rocket.Routing
     public interface IAcceptHeaderStore
     {
         void Set(AcceptHeader acceptHeader);
+
+        MediaType Get();
     }
 }
