@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Rocket.Routing.Providers;
+using Rocket.Routing;
 
 namespace Routing
 {

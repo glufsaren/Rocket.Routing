@@ -1,18 +1,19 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IAcceptHeaderStore.cs" company="Borderline Studios">
+// <copyright file="AcceptHeaderPatternProviderTest.cs" company="Borderline Studios">
 //   Copyright © Borderline Studios. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the IAcceptHeaderStore type.
+//   Defines the AcceptHeaderPatternProviderTest type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rocket.Routing
-{
-    public interface IAcceptHeaderStore
-    {
-        void Set(AcceptHeader acceptHeader);
+using NUnit.Framework;
 
-        MediaType Get();
+namespace Rocket.Routing.Test.Unit
+{
+    [TestFixture]
+    public class AcceptHeaderPatternProviderTest
+    {
+         
     }
 }

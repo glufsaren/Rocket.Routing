@@ -9,7 +9,7 @@
 
 using JetBrains.Annotations;
 
-namespace Rocket.Routing.Providers
+namespace Rocket.Routing
 {
     [UsedImplicitly]
     public class DefaultVendorNameProvider : IVendorNameProvider

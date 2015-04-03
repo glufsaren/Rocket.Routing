@@ -7,16 +7,16 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Globalization;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Rocket.Routing.Entities;
 using Rocket.Web.Extensions;
 
-namespace Rocket.Routing.Http
+namespace Rocket.Routing
 {
     public class MessageHeadersHandler : DelegatingHandler
     {
@@ -30,6 +30,9 @@ namespace Rocket.Routing.Http
             var acceptHeaderStore = requestMessage
                 .GetService<IAcceptHeaderStore>();
 
+            var requestIdProvider = requestMessage
+                .GetService<IRequestIdProvider>();
+
             var mediaType = acceptHeaderStore.Get();
 
             var vendorName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase((vendorNameProvider.GetName() ?? string.Empty).ToLower());
@@ -39,7 +42,7 @@ namespace Rocket.Routing.Http
             var requestIdHeaderName = string.Format("X-{0}-Request-Id", vendorName);
 
             responseMessage.Headers.Add(mediaTypeHeaderName, mediaTypeString);
-            responseMessage.Headers.Add(requestIdHeaderName, mediaType.RequestId.ToString());
+            responseMessage.Headers.Add(requestIdHeaderName, GetRequestId(mediaType, requestIdProvider));
         }
 
         protected async override Task<HttpResponseMessage> SendAsync(
@@ -51,6 +54,18 @@ namespace Rocket.Routing.Http
             AddMediaTypeDataInResponse(requestMessage, responseMessage);
 
             return responseMessage;
+        }
+
+        private static bool HasRequestId(MediaType mediaType)
+        {
+            return mediaType != null && mediaType.RequestId != Guid.Empty;
+        }
+
+        private static string GetRequestId(MediaType mediaType, IRequestIdProvider requestIdProvider)
+        {
+            return HasRequestId(mediaType)
+                       ? mediaType.RequestId.ToString()
+                       : requestIdProvider.Get().ToString();
         }
 
         private static string GetMediaTypeString(MediaType mediaType, string vendorName)

@@ -9,7 +9,7 @@
 
 using System;
 
-namespace Rocket.Routing.Entities
+namespace Rocket.Routing
 {
     public class MediaType
     {

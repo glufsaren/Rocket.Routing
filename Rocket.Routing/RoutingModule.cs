@@ -7,18 +7,15 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Net.Http;
-using System.Web;
+using System.Reflection;
 using System.Web.Http;
 
 using Autofac;
-using Autofac.Integration.WebApi;
 
 using Rocket.Core.Configuration;
-using Rocket.Routing.Entities;
-using Rocket.Routing.Extensions;
-using Rocket.Routing.Http;
-using Rocket.Routing.Providers;
+using Rocket.Core.Diagnostics;
+
+using Module = Autofac.Module;
 
 namespace Rocket.Routing
 {
@@ -37,25 +34,13 @@ namespace Rocket.Routing
             _httpConfiguration.MessageHandlers
                 .Add(new MessageHeadersHandler());
 
-            //builder
-            //    .RegisterHttpRequestMessage(_httpConfiguration);
+            var assembly = Assembly.GetExecutingAssembly();
 
-            //builder.RegisterInstance(_httpConfiguration).As<HttpConfiguration>();
-
-            //builder
-            //    .RegisterHttpRequestMessage(_httpConfiguration);
-
-            //builder.RegisterHttpRequestMessage(
-            //    GlobalConfiguration.Configuration);
-
-           // builder.Register(c =>
-           //            c.Resolve<HttpRequestMessage>()
-           //             .GetConfiguration())
-           //.As<HttpConfiguration>();
-
-
-            //builder
-            //    .RegisterType<HttpRequestMessage>();
+            builder
+                .RegisterAssemblyTypes(assembly)
+                .Where(t => t.Name.EndsWith("Provider"))
+                .AsImplementedInterfaces()
+                .InstancePerRequest();
 
             builder
                 .RegisterType<AcceptHeaderParser>()
@@ -63,34 +48,38 @@ namespace Rocket.Routing
                 .InstancePerRequest();
 
             builder
+                .RegisterType<RoutingService>()
+                .As<IRoutingService>()
+                .InstancePerRequest();
+
+            builder
                 .RegisterType<SettingsReader>()
                 .As<ISettingsReader>()
                 .InstancePerRequest();
 
-            builder
-                .RegisterType<DefaultVendorNameProvider>()
-                .As<IVendorNameProvider>()
-                .InstancePerRequest();
-
-            //builder
-            //    .Register(c => new VersionComparer(
-            //        c.Resolve<IHeaderParser<AcceptHeader>>(),
-            //        c.Resolve<IRequestIdProvider>(),
-            //        c.Resolve<HttpRequestMessage>()))
-            //    .As<IVersionComparer>()
-            //    .InstancePerRequest();
+            ////builder
+            ////    .RegisterType<DefaultVendorNameProvider>()
+            ////    .As<IVendorNameProvider>()
+            ////    .InstancePerRequest();
 
             builder
-                .Register(
-                c => new RequestPropertiesAcceptHeaderStore(
-                    c.Resolve<IRequestIdProvider>(),
-                    builder.CurrentRequest()))
+                .RegisterType<RequestPropertiesAcceptHeaderStore>()
                 .As<IAcceptHeaderStore>()
                 .InstancePerRequest();
 
             builder
-                .Register(c => new RequestIdProvider(builder.CurrentRequest()))
+                .RegisterType<RequestIdProvider>()
                 .As<IRequestIdProvider>()
+                .InstancePerRequest();
+
+            builder
+                .RegisterType<HttpRequestMessageResolver>()
+                .As<IHttpRequestMessageResolver>()
+                .InstancePerRequest();
+
+            builder
+                .Register(b => new Log("Rocket.Routing"))
+                .As<ILog>()
                 .InstancePerRequest();
         }
     }

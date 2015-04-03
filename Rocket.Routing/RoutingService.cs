@@ -7,13 +7,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Net.Http.Headers;
-
-using Rocket.Routing.Entities;
-using Rocket.Web.Extensions;
+using JetBrains.Annotations;
 
 namespace Rocket.Routing
 {
+    [UsedImplicitly]
     public class RoutingService : IRoutingService
     {
         private readonly IHeaderParser<AcceptHeader> _headerParser;
@@ -33,7 +31,7 @@ namespace Rocket.Routing
                     bool isLatest)
         {
             var acceptHeader =
-                _headerParser.Parse(acceptHeaderValue);
+                CreateAcceptHeader(acceptHeaderValue);
 
             if (acceptHeader == null)
             {
@@ -46,6 +44,13 @@ namespace Rocket.Routing
             _acceptHeaderStore.Set(acceptHeader);
 
             return acceptHeader.Matches;
+        }
+
+        private AcceptHeader CreateAcceptHeader(string acceptHeaderValue)
+        {
+            return !string.IsNullOrWhiteSpace(acceptHeaderValue)
+                       ? _headerParser.Parse(acceptHeaderValue)
+                       : AcceptHeaderFactory.Default();
         }
     }
 }

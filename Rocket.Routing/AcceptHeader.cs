@@ -7,16 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rocket.Routing.Entities
+namespace Rocket.Routing
 {
     public class AcceptHeader
     {
-        public AcceptHeader()
-        {
-            RequestedVersion = 0;
-            ContentType = ContentType.Json;
-        }
-
         public ContentType ContentType { get; set; }
 
         public double? RequestedVersion { get; set; }

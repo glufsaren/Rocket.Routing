@@ -1,35 +1,40 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AcceptHeaderStore.cs" company="Borderline Studios">
+// <copyright file="RequestPropertiesAcceptHeaderStore.cs" company="Borderline Studios">
 //   Copyright © Borderline Studios. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the AcceptHeaderStore type.
+//   Defines the RequestPropertiesAcceptHeaderStore type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Net.Http;
 
-using Rocket.Routing.Entities;
+using JetBrains.Annotations;
 
-namespace Rocket.Routing.Http
+namespace Rocket.Routing
 {
+    [UsedImplicitly]
     public class RequestPropertiesAcceptHeaderStore : IAcceptHeaderStore
     {
         private readonly IRequestIdProvider _requestIdProvider;
-        private readonly HttpRequestMessage _httpRequestMessage;
+
+        private readonly IHttpRequestMessageResolver _httpRequestMessageResolver;
 
         public RequestPropertiesAcceptHeaderStore(
                         IRequestIdProvider requestIdProvider,
-                        HttpRequestMessage httpRequestMessage)
+                        IHttpRequestMessageResolver httpRequestMessageResolver)
         {
             _requestIdProvider = requestIdProvider;
-            _httpRequestMessage = httpRequestMessage;
+            _httpRequestMessageResolver = httpRequestMessageResolver;
         }
 
         public void Set(AcceptHeader acceptHeader)
         {
+            var httpRequestMessage =
+                _httpRequestMessageResolver.Current();
+
             var mediaTypeProperties =
-                new RequestPropertiesMediaType(_httpRequestMessage);
+                new RequestPropertiesMediaType(httpRequestMessage);
 
             if (acceptHeader.Matches)
             {
@@ -44,7 +49,10 @@ namespace Rocket.Routing.Http
 
         public MediaType Get()
         {
-            return new RequestPropertiesMediaType(_httpRequestMessage);
+            var httpRequestMessage =
+                _httpRequestMessageResolver.Current();
+
+            return new RequestPropertiesMediaType(httpRequestMessage);
         }
     }
 }

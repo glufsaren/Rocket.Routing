@@ -13,7 +13,6 @@ using Moq;
 
 using NUnit.Framework;
 
-using Rocket.Routing.Entities;
 using Rocket.Test;
 
 using Should;

@@ -13,7 +13,6 @@ using Moq;
 
 using NUnit.Framework;
 
-using Rocket.Routing.Http;
 using Rocket.Test;
 
 namespace Rocket.Routing.Test.Unit.Http

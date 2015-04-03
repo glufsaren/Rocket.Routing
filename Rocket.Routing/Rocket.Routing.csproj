@@ -68,24 +68,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AcceptHeader.cs" />
+    <Compile Include="AcceptHeaderFactory.cs" />
+    <Compile Include="AcceptHeaderParser.cs" />
     <Compile Include="AcceptHeaderPatternProvider.cs" />
-    <Compile Include="Entities\AcceptHeader.cs" />
-    <Compile Include="Entities\ContentType.cs" />
-    <Compile Include="Entities\MediaType.cs" />
-    <Compile Include="Entities\RequestPropertiesMediaType.cs" />
-    <Compile Include="Extensions\ContainerBuilderExtensions.cs" />
-    <Compile Include="Http\AcceptHeaderParser.cs" />
-    <Compile Include="Http\RequestPropertiesAcceptHeaderStore.cs" />
-    <Compile Include="Http\MessageHeadersHandler.cs" />
+    <Compile Include="HttpRequestMessageResolver.cs" />
+    <Compile Include="ContentType.cs" />
+    <Compile Include="DefaultVendorNameProvider.cs" />
     <Compile Include="IAcceptHeaderPatternProvider.cs" />
     <Compile Include="IAcceptHeaderStore.cs" />
     <Compile Include="IHeaderParser.cs" />
+    <Compile Include="IHttpRequestMessageResolver.cs" />
     <Compile Include="IRequestIdProvider.cs" />
     <Compile Include="IRoutingService.cs" />
     <Compile Include="IVendorNameProvider.cs" />
-    <Compile Include="Providers\RequestIdProvider.cs" />
-    <Compile Include="Providers\DefaultVendorNameProvider.cs" />
+    <Compile Include="MediaType.cs" />
+    <Compile Include="MessageHeadersHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegexExtensions.cs" />
+    <Compile Include="RequestIdProvider.cs" />
+    <Compile Include="RequestPropertiesAcceptHeaderStore.cs" />
+    <Compile Include="RequestPropertiesMediaType.cs" />
     <Compile Include="RoutingModule.cs" />
     <Compile Include="RoutingService.cs" />
     <Compile Include="VersionConstraint.cs" />
