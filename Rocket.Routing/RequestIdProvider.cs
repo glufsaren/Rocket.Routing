@@ -36,7 +36,9 @@ namespace Rocket.Routing
             var httpRequestMessage =
                 _httpRequestMessageResolver.Current();
 
-            return httpRequestMessage.GetCorrelationId();
+            return httpRequestMessage != null
+                        ? httpRequestMessage.GetCorrelationId()
+                        : Guid.Empty;
         }
     }
 }

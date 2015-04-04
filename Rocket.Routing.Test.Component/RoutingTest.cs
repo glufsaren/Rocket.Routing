@@ -376,7 +376,6 @@ namespace Rocket.Routing.Test.Component
         {
             private Result<string> _result;
             private HttpServerHost _httpServerHostHost;
-            private string _mediaTypeHeader;
             private string _requestIdHeader;
             private Dictionary<string, string> _headers;
 
@@ -404,9 +403,6 @@ namespace Rocket.Routing.Test.Component
 
             protected override void Assemble()
             {
-                _mediaTypeHeader = _result.HttpResponseMessage
-                    .TryGetHeader("X-Rocket-Media-Type");
-
                 _requestIdHeader = _result.HttpResponseMessage
                     .TryGetHeader("X-Rocket-Request-Id");
             }

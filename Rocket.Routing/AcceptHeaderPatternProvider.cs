@@ -14,8 +14,6 @@ namespace Rocket.Routing
     [UsedImplicitly]
     internal sealed class AcceptHeaderPatternProvider : IAcceptHeaderPatternProvider
     {
-        private const string DefaultVendorName = "acme";
-
         private readonly IVendorNameProvider _vendorNameProvider;
 
         public AcceptHeaderPatternProvider(
@@ -26,19 +24,16 @@ namespace Rocket.Routing
 
         public string Get()
         {
-            var vendorName = GetVendorName();
-
             var vendorNamePlaceHolder =
                 _vendorNameProvider.GetPlaceHolder();
 
-            var matchPattern =
-                _vendorNameProvider.GetPattern();
+            var matchPattern = GetMatchPattern();
 
             if (PlaceholderIsSpecified(vendorNamePlaceHolder) &&
                 PatternHasPlaceholder(matchPattern, vendorNamePlaceHolder))
             {
                 return matchPattern.Replace(
-                    vendorNamePlaceHolder, vendorName.ToLower());
+                    vendorNamePlaceHolder, GetVendorName().ToLower());
             }
 
             return matchPattern;
@@ -63,7 +58,17 @@ namespace Rocket.Routing
 
             return !string.IsNullOrWhiteSpace(vendorName)
                                 ? vendorName
-                                : DefaultVendorName;
+                                : DefaultVendorNameProvider.DefaultVendorName;
+        }
+
+        private string GetMatchPattern()
+        {
+            var matchPattern =
+                _vendorNameProvider.GetPattern();
+
+            return !string.IsNullOrWhiteSpace(matchPattern)
+                                ? matchPattern
+                                : DefaultVendorNameProvider.CustomMediaTypePattern;
         }
     }
 }

@@ -10,8 +10,11 @@
 using System.Net.Http;
 using System.Web;
 
+using JetBrains.Annotations;
+
 namespace Rocket.Routing
 {
+    [UsedImplicitly]
     public class HttpRequestMessageResolver : IHttpRequestMessageResolver
     {
         public HttpRequestMessage Current()

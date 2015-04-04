@@ -7,79 +7,71 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Globalization;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Rocket.Routing.Model.ValueObjects;
 using Rocket.Web.Extensions;
 
 namespace Rocket.Routing
 {
     public class MessageHeadersHandler : DelegatingHandler
     {
-        internal static void AddMediaTypeDataInResponse(
-            HttpRequestMessage requestMessage,
+        public IVendorNameProvider VendorNameProvider { get; set; }
+
+        public IAcceptHeaderStore AcceptHeaderStore { get; set; }
+
+        public IRequestIdProvider RequestIdProvider { get; set; }
+
+        internal void AddResponseHeaders(
             HttpResponseMessage responseMessage)
         {
-            var vendorNameProvider = requestMessage
-                .GetService<IVendorNameProvider>();
+            var vendorName =
+                new VendorName(VendorNameProvider.GetName());
 
-            var acceptHeaderStore = requestMessage
-                .GetService<IAcceptHeaderStore>();
+            var mediaType = AcceptHeaderStore.Get();
 
-            var requestIdProvider = requestMessage
-                .GetService<IRequestIdProvider>();
+            responseMessage.Headers.Add(
+                MediaType.GetMediaTypeHeaderName(vendorName.Value),
+                mediaType.GetMediaTypeString(vendorName.Value));
 
-            var mediaType = acceptHeaderStore.Get();
-
-            var vendorName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase((vendorNameProvider.GetName() ?? string.Empty).ToLower());
-            var mediaTypeString = GetMediaTypeString(mediaType, vendorName);
-
-            var mediaTypeHeaderName = string.Format("X-{0}-Media-Type", vendorName);
-            var requestIdHeaderName = string.Format("X-{0}-Request-Id", vendorName);
-
-            responseMessage.Headers.Add(mediaTypeHeaderName, mediaTypeString);
-            responseMessage.Headers.Add(requestIdHeaderName, GetRequestId(mediaType, requestIdProvider));
+            responseMessage.Headers.Add(
+                MediaType.GetRequestIdHeaderName(vendorName.Value),
+                GetRequestId(mediaType, RequestIdProvider));
         }
 
         protected async override Task<HttpResponseMessage> SendAsync(
             HttpRequestMessage requestMessage, CancellationToken cancellationToken)
         {
+            BuildUp(requestMessage);
+
             HttpResponseMessage responseMessage =
                 await base.SendAsync(requestMessage, cancellationToken);
 
-            AddMediaTypeDataInResponse(requestMessage, responseMessage);
+            AddResponseHeaders(responseMessage);
 
             return responseMessage;
         }
 
-        private static bool HasRequestId(MediaType mediaType)
+        private static string GetRequestId(
+            MediaType mediaType, IRequestIdProvider requestIdProvider)
         {
-            return mediaType != null && mediaType.RequestId != Guid.Empty;
+            return mediaType.HasRequestId()
+                    ? mediaType.RequestId.ToString()
+                    : requestIdProvider.Get().ToString();
         }
 
-        private static string GetRequestId(MediaType mediaType, IRequestIdProvider requestIdProvider)
+        private void BuildUp(HttpRequestMessage requestMessage)
         {
-            return HasRequestId(mediaType)
-                       ? mediaType.RequestId.ToString()
-                       : requestIdProvider.Get().ToString();
-        }
+            VendorNameProvider = requestMessage
+                .GetService<IVendorNameProvider>();
 
-        private static string GetMediaTypeString(MediaType mediaType, string vendorName)
-        {
-            var stringBuilder = new StringBuilder();
+            AcceptHeaderStore = requestMessage
+                .GetService<IAcceptHeaderStore>();
 
-            stringBuilder.AppendFormat("{0}.v{1};", vendorName, mediaType.ActualVersion);
-
-            if (mediaType.ContentType != ContentType.Unspecified)
-            {
-                stringBuilder.AppendFormat(" format={0};", mediaType.ContentType.ToString().ToLower());
-            }
-
-            return stringBuilder.ToString();
+            RequestIdProvider = requestMessage
+                .GetService<IRequestIdProvider>();
         }
     }
 }

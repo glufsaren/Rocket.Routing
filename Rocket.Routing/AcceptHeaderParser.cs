@@ -7,7 +7,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -25,8 +24,20 @@ namespace Rocket.Routing
 
         public AcceptHeader Parse(string acceptHeader)
         {
+            if (string.IsNullOrWhiteSpace(acceptHeader))
+            {
+                return null;
+            }
+
+            var pattern = GetPattern();
+
+            if (string.IsNullOrWhiteSpace(pattern))
+            {
+                return null;
+            }
+
             var match = Match(
-                acceptHeader, GetPattern());
+                acceptHeader, pattern);
 
             return match != null
                 ? AcceptHeaderFactory.Create(match)
@@ -35,8 +46,8 @@ namespace Rocket.Routing
 
         private static Match Match(string acceptHeader, string pattern)
         {
-            MatchCollection matches =
-                Regex.Matches(acceptHeader, pattern);
+            MatchCollection matches = Regex.Matches(
+                acceptHeader ?? string.Empty, pattern);
 
             return matches
                     .Cast<Match>()

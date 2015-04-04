@@ -7,8 +7,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Net.Http;
-
 using JetBrains.Annotations;
 
 namespace Rocket.Routing
@@ -17,7 +15,6 @@ namespace Rocket.Routing
     public class RequestPropertiesAcceptHeaderStore : IAcceptHeaderStore
     {
         private readonly IRequestIdProvider _requestIdProvider;
-
         private readonly IHttpRequestMessageResolver _httpRequestMessageResolver;
 
         public RequestPropertiesAcceptHeaderStore(

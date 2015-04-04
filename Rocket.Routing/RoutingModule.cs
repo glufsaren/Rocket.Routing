@@ -57,11 +57,6 @@ namespace Rocket.Routing
                 .As<ISettingsReader>()
                 .InstancePerRequest();
 
-            ////builder
-            ////    .RegisterType<DefaultVendorNameProvider>()
-            ////    .As<IVendorNameProvider>()
-            ////    .InstancePerRequest();
-
             builder
                 .RegisterType<RequestPropertiesAcceptHeaderStore>()
                 .As<IAcceptHeaderStore>()

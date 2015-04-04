@@ -78,7 +78,6 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Scenarios.md" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

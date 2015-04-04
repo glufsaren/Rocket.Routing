@@ -13,7 +13,7 @@ using Rocket.Test;
 
 using Should;
 
-namespace Rocket.Routing.Test.Unit.Entities
+namespace Rocket.Routing.Test.Unit
 {
     [TestFixture]
     public class AcceptHeaderTest
@@ -35,13 +35,13 @@ namespace Rocket.Routing.Test.Unit.Entities
             [Test]
             public void It_initializes_requested_verison()
             {
-                _acceptHeader.RequestedVersion.ShouldEqual(0);
+                _acceptHeader.RequestedVersion.ShouldBeNull();
             }
 
             [Test]
             public void It_initializes_content_type()
             {
-                _acceptHeader.ContentType.ShouldEqual(ContentType.Json);
+                _acceptHeader.ContentType.ShouldEqual(ContentType.Unspecified);
             }
         }
 

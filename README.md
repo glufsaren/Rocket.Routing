@@ -1,4 +1,6 @@
-# README #
+# Rocket.Routing #
+
+Rocket.Routing uses a route constraint in order to enable versioning of REST APIs. If no version is specified the route marked with `isLatest`.
 
 This README would normally document whatever steps are necessary to get your application up and running.
 
