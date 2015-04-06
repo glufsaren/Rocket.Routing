@@ -1,9 +1,9 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="HttpRequestMessageResolver.cs" company="Borderline Studios">
+// <copyright file="HttpRequestMessageResolverService.cs" company="Borderline Studios">
 //   Copyright © Borderline Studios. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the HttpRequestMessageResolver type.
+//   Defines the HttpRequestMessageResolverService type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -12,10 +12,12 @@ using System.Web;
 
 using JetBrains.Annotations;
 
-namespace Rocket.Routing
+using Rocket.Routing.Services.Contracts;
+
+namespace Rocket.Routing.Services
 {
     [UsedImplicitly]
-    public class HttpRequestMessageResolver : IHttpRequestMessageResolver
+    public sealed class HttpRequestMessageResolverService : IHttpRequestMessageResolverService
     {
         public HttpRequestMessage Current()
         {

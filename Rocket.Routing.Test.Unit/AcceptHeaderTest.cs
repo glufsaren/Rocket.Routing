@@ -9,6 +9,8 @@
 
 using NUnit.Framework;
 
+using Rocket.Routing.Model;
+using Rocket.Routing.Model.ValueObjects;
 using Rocket.Test;
 
 using Should;
@@ -29,19 +31,20 @@ namespace Rocket.Routing.Test.Unit
 
             protected override void Act()
             {
-                _acceptHeader = new AcceptHeader();
+                _acceptHeader =
+                    new AcceptHeader(ContentType.Xml, 1.2);
             }
 
             [Test]
             public void It_initializes_requested_verison()
             {
-                _acceptHeader.RequestedVersion.ShouldBeNull();
+                _acceptHeader.RequestedVersion.ShouldEqual(1.2);
             }
 
             [Test]
             public void It_initializes_content_type()
             {
-                _acceptHeader.ContentType.ShouldEqual(ContentType.Unspecified);
+                _acceptHeader.ContentType.ShouldEqual(ContentType.Xml);
             }
         }
 
@@ -52,10 +55,8 @@ namespace Rocket.Routing.Test.Unit
 
             protected override void Arrange()
             {
-                _acceptHeader = new AcceptHeader
-                                    {
-                                        RequestedVersion = null
-                                    };
+                _acceptHeader = new AcceptHeader(
+                    ContentType.Unspecified, null);
             }
 
             protected override void Act()
@@ -83,10 +84,8 @@ namespace Rocket.Routing.Test.Unit
 
             protected override void Arrange()
             {
-                _acceptHeader = new AcceptHeader
-                {
-                    RequestedVersion = null
-                };
+                _acceptHeader = new AcceptHeader(
+                    ContentType.Unspecified, null);
             }
 
             protected override void Act()
@@ -114,10 +113,8 @@ namespace Rocket.Routing.Test.Unit
 
             protected override void Arrange()
             {
-                _acceptHeader = new AcceptHeader
-                {
-                    RequestedVersion = 1
-                };
+                _acceptHeader = new AcceptHeader(
+                    ContentType.Unspecified, 1);
             }
 
             protected override void Act()
@@ -145,10 +142,8 @@ namespace Rocket.Routing.Test.Unit
 
             protected override void Arrange()
             {
-                _acceptHeader = new AcceptHeader
-                {
-                    RequestedVersion = 1
-                };
+                _acceptHeader = new AcceptHeader(
+                    ContentType.Unspecified, 1);
             }
 
             protected override void Act()

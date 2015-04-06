@@ -14,6 +14,7 @@ using Autofac;
 using Autofac.Integration.WebApi;
 
 using Rocket.Routing;
+using Rocket.Routing.Services.Contracts;
 
 namespace Routing
 {
@@ -22,9 +23,6 @@ namespace Routing
         public static void RegisterComponents(HttpConfiguration config)
         {
             var builder = new ContainerBuilder();
-
-            //builder
-            //    .RegisterHttpRequestMessage(config);
 
             var executingAssembly = Assembly.GetExecutingAssembly();
 
@@ -40,8 +38,13 @@ namespace Routing
                 .RegisterModule(new RoutingModule(config));
 
             builder
-                .RegisterType<VendorNameProvider>()
-                .As<IVendorNameProvider>()
+                .RegisterType<DefaultVendorNameService>()
+                .As<IVendorNameService>()
+                .InstancePerRequest();
+
+            builder
+                .RegisterType<DefaultRequestIdService>()
+                .As<IRequestIdService>()
                 .InstancePerRequest();
 
             var container = builder.Build();

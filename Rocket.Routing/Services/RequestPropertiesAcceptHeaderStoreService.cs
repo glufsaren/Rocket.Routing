@@ -1,27 +1,31 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RequestPropertiesAcceptHeaderStore.cs" company="Borderline Studios">
+// <copyright file="RequestPropertiesAcceptHeaderStoreService.cs" company="Borderline Studios">
 //   Copyright © Borderline Studios. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the RequestPropertiesAcceptHeaderStore type.
+//   Defines the RequestPropertiesAcceptHeaderStoreService type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 using JetBrains.Annotations;
 
-namespace Rocket.Routing
+using Rocket.Routing.Model.Entities;
+using Rocket.Routing.Model.ValueObjects;
+using Rocket.Routing.Services.Contracts;
+
+namespace Rocket.Routing.Services
 {
     [UsedImplicitly]
-    public class RequestPropertiesAcceptHeaderStore : IAcceptHeaderStore
+    public sealed class RequestPropertiesAcceptHeaderStoreService : IAcceptHeaderStoreService
     {
-        private readonly IRequestIdProvider _requestIdProvider;
-        private readonly IHttpRequestMessageResolver _httpRequestMessageResolver;
+        private readonly IRequestIdService _requestIdService;
+        private readonly IHttpRequestMessageResolverService _httpRequestMessageResolver;
 
-        public RequestPropertiesAcceptHeaderStore(
-                        IRequestIdProvider requestIdProvider,
-                        IHttpRequestMessageResolver httpRequestMessageResolver)
+        public RequestPropertiesAcceptHeaderStoreService(
+                        IRequestIdService requestIdService,
+                        IHttpRequestMessageResolverService httpRequestMessageResolver)
         {
-            _requestIdProvider = requestIdProvider;
+            _requestIdService = requestIdService;
             _httpRequestMessageResolver = httpRequestMessageResolver;
         }
 
@@ -41,7 +45,7 @@ namespace Rocket.Routing
                 mediaTypeProperties.Matched = true;
             }
 
-            mediaTypeProperties.RequestId = _requestIdProvider.Get();
+            mediaTypeProperties.RequestId = _requestIdService.Get();
         }
 
         public MediaType Get()

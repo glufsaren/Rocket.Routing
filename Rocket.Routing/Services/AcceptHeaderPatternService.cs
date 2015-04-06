@@ -1,31 +1,33 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AcceptHeaderPatternProvider.cs" company="Borderline Studios">
+// <copyright file="acceptHeaderPatternService.cs" company="Borderline Studios">
 //   Copyright © Borderline Studios. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the AcceptHeaderPatternProvider type.
+//   Defines the acceptHeaderPatternService type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 using JetBrains.Annotations;
 
-namespace Rocket.Routing
+using Rocket.Routing.Services.Contracts;
+
+namespace Rocket.Routing.Services
 {
     [UsedImplicitly]
-    internal sealed class AcceptHeaderPatternProvider : IAcceptHeaderPatternProvider
+    internal sealed class AcceptHeaderPatternService : IAcceptHeaderPatternService
     {
-        private readonly IVendorNameProvider _vendorNameProvider;
+        private readonly IVendorNameService _vendorNameService;
 
-        public AcceptHeaderPatternProvider(
-            IVendorNameProvider vendorNameProvider)
+        public AcceptHeaderPatternService(
+            IVendorNameService vendorNameService)
         {
-            _vendorNameProvider = vendorNameProvider;
+            _vendorNameService = vendorNameService;
         }
 
         public string Get()
         {
             var vendorNamePlaceHolder =
-                _vendorNameProvider.GetPlaceHolder();
+                _vendorNameService.GetPlaceHolder();
 
             var matchPattern = GetMatchPattern();
 
@@ -54,21 +56,21 @@ namespace Rocket.Routing
         private string GetVendorName()
         {
             var vendorName =
-                _vendorNameProvider.GetName();
+                _vendorNameService.GetName();
 
             return !string.IsNullOrWhiteSpace(vendorName)
                                 ? vendorName
-                                : DefaultVendorNameProvider.DefaultVendorName;
+                                : DefaultVendorNameService.DefaultVendorName;
         }
 
         private string GetMatchPattern()
         {
             var matchPattern =
-                _vendorNameProvider.GetPattern();
+                _vendorNameService.GetPattern();
 
             return !string.IsNullOrWhiteSpace(matchPattern)
                                 ? matchPattern
-                                : DefaultVendorNameProvider.CustomMediaTypePattern;
+                                : DefaultVendorNameService.CustomMediaTypePattern;
         }
     }
 }

@@ -12,7 +12,7 @@ using System.Net.Http;
 
 using Rocket.Web.Extensions;
 
-namespace Rocket.Routing
+namespace Rocket.Routing.Model.Entities
 {
     internal sealed class RequestPropertiesMediaType : MediaType
     {

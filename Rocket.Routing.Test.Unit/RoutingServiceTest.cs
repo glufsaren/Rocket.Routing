@@ -11,6 +11,11 @@ using Moq;
 
 using NUnit.Framework;
 
+using Rocket.Core.Diagnostics;
+using Rocket.Routing.Model;
+using Rocket.Routing.Model.ValueObjects;
+using Rocket.Routing.Services;
+using Rocket.Routing.Services.Contracts;
 using Rocket.Test;
 
 using Should;
@@ -26,17 +31,19 @@ namespace Rocket.Routing.Test.Unit
             AcceptHeader acceptHeader = null;
 
             var acceptHeaderStore =
-                new Mock<IAcceptHeaderStore>();
+                new Mock<IAcceptHeaderStoreService>();
 
             acceptHeaderStore
                 .Setup(m => m.Set(It.IsAny<AcceptHeader>()))
                 .Callback<AcceptHeader>(arg => { acceptHeader = arg; });
 
+            var log = new Mock<ILog>();
+
             var headerParser =
-                new Mock<IHeaderParser<AcceptHeader>>(MockBehavior.Strict);
+                new Mock<IHeaderParserService<AcceptHeader>>(MockBehavior.Strict);
 
             var routingService = new RoutingService(
-                acceptHeaderStore.Object, headerParser.Object);
+                acceptHeaderStore.Object, headerParser.Object, log.Object);
 
             var matches = routingService.Match(acceptHeaderValue, 1, false);
 
@@ -49,16 +56,18 @@ namespace Rocket.Routing.Test.Unit
         public void When_parsed_header_is_null_expect_no_match()
         {
             var acceptHeaderStore =
-                new Mock<IAcceptHeaderStore>(MockBehavior.Strict);
+                new Mock<IAcceptHeaderStoreService>(MockBehavior.Strict);
 
             var headerParser =
-                new Mock<IHeaderParser<AcceptHeader>>();
+                new Mock<IHeaderParserService<AcceptHeader>>();
             headerParser
                 .Setup(m => m.Parse(It.IsAny<string>()))
                 .Returns((AcceptHeader)null);
 
+            var log = new Mock<ILog>();
+
             var routingService = new RoutingService(
-                acceptHeaderStore.Object, headerParser.Object);
+                acceptHeaderStore.Object, headerParser.Object, log.Object);
 
             var matches = routingService.Match("Header", 1, false);
 
@@ -75,13 +84,13 @@ namespace Rocket.Routing.Test.Unit
 
             protected override void Arrange()
             {
-                var acceptHeaderStore = new Mock<IAcceptHeaderStore>();
+                var acceptHeaderStore = new Mock<IAcceptHeaderStoreService>();
 
                 acceptHeaderStore
                     .Setup(m => m.Set(It.IsAny<AcceptHeader>()))
                     .Callback<AcceptHeader>(arg => { _storedAcceptHeader = arg; });
 
-                var headerParser = new Mock<IHeaderParser<AcceptHeader>>();
+                var headerParser = new Mock<IHeaderParserService<AcceptHeader>>();
 
                 _acceptHeader = CreateAcceptHeader();
                 _acceptHeader.MatchHeaderVersion(1, true);
@@ -90,8 +99,10 @@ namespace Rocket.Routing.Test.Unit
                     .Setup(m => m.Parse(It.IsAny<string>()))
                     .Returns(_acceptHeader);
 
+                var log = new Mock<ILog>();
+
                 _routingService = new RoutingService(
-                    acceptHeaderStore.Object, headerParser.Object);
+                    acceptHeaderStore.Object, headerParser.Object, log.Object);
             }
 
             protected override void Act()
@@ -113,11 +124,7 @@ namespace Rocket.Routing.Test.Unit
 
             private static AcceptHeader CreateAcceptHeader()
             {
-                return new AcceptHeader
-                           {
-                               ContentType = ContentType.Xml,
-                               RequestedVersion = 2.1
-                           };
+                return new AcceptHeader(ContentType.Xml, 2.1);
             }
         }
     }

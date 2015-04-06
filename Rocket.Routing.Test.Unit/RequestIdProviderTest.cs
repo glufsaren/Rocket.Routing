@@ -15,6 +15,9 @@ using Moq;
 
 using NUnit.Framework;
 
+using Rocket.Routing.Services;
+using Rocket.Routing.Services.Contracts;
+
 using Should;
 
 namespace Rocket.Routing.Test.Unit
@@ -26,13 +29,13 @@ namespace Rocket.Routing.Test.Unit
         public void When_no_request_is_resolved_expect_empty_request_id()
         {
             var httpRequestMessageResolver =
-                new Mock<IHttpRequestMessageResolver>();
+                new Mock<IHttpRequestMessageResolverService>();
 
             httpRequestMessageResolver
                     .Setup(m => m.Current())
                     .Returns((HttpRequestMessage)null);
 
-            var requestIdProvider = new RequestIdProvider(
+            var requestIdProvider = new RequestIdService(
                 httpRequestMessageResolver.Object);
 
             var requestId = requestIdProvider.Get();
@@ -49,13 +52,13 @@ namespace Rocket.Routing.Test.Unit
                 new Guid("757DB7D0-859E-4E9E-ABA0-23D312F18541"));
 
             var httpRequestMessageResolver =
-                new Mock<IHttpRequestMessageResolver>();
+                new Mock<IHttpRequestMessageResolverService>();
 
             httpRequestMessageResolver
                     .Setup(m => m.Current())
                     .Returns(httpRequestMessage);
 
-            var requestIdProvider = new RequestIdProvider(
+            var requestIdProvider = new RequestIdService(
                 httpRequestMessageResolver.Object);
 
             var requestId = requestIdProvider.Get();

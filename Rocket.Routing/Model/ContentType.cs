@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rocket.Routing
+namespace Rocket.Routing.Model
 {
     public enum ContentType
     {

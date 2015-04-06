@@ -11,6 +11,8 @@ using Moq;
 
 using NUnit.Framework;
 
+using Rocket.Routing.Services;
+using Rocket.Routing.Services.Contracts;
 using Rocket.Test;
 
 using Should;
@@ -23,7 +25,7 @@ namespace Rocket.Routing.Test.Unit
         [TestCaseSource(typeof(TestCaseSources), "NullOrWhitespace")]
         public void When_vendor_name_is_null_or_empty_expect_no_exception(string vendorName)
         {
-            var vendorNameProvider = new Mock<IVendorNameProvider>();
+            var vendorNameProvider = new Mock<IVendorNameService>();
 
             vendorNameProvider
                 .Setup(m => m.GetName())
@@ -38,7 +40,7 @@ namespace Rocket.Routing.Test.Unit
                 .Returns("#NAME");
 
             var acceptHeaderPatternProvider =
-                new AcceptHeaderPatternProvider(vendorNameProvider.Object);
+                new AcceptHeaderPatternService(vendorNameProvider.Object);
 
             var acceptHeaderPattern = acceptHeaderPatternProvider.Get();
 
@@ -46,9 +48,9 @@ namespace Rocket.Routing.Test.Unit
         }
 
         [TestCaseSource(typeof(TestCaseSources), "NullOrWhitespace")]
-        public void When_pattern_is_null_or_empty_expect_no_exception(string pattern)
+        public void When_pattern_is_null_or_empty_expect_default_pattern_used(string pattern)
         {
-            var vendorNameProvider = new Mock<IVendorNameProvider>();
+            var vendorNameProvider = new Mock<IVendorNameService>();
 
             vendorNameProvider
                 .Setup(m => m.GetName())
@@ -63,18 +65,20 @@ namespace Rocket.Routing.Test.Unit
                 .Returns(pattern);
 
             var acceptHeaderPatternProvider =
-                new AcceptHeaderPatternProvider(vendorNameProvider.Object);
+                new AcceptHeaderPatternService(vendorNameProvider.Object);
 
             var acceptHeaderPattern = acceptHeaderPatternProvider.Get();
 
-            acceptHeaderPattern.ShouldEqual(
-                @"^application\/(vnd\.rocket(\.[a-zA-Z0-9-]{2,20})*)?(\+?(?<contenttype>[a-zA-Z0-9-\.]*?));?(\sversion=(?<version>\d+(\.\d+)*);?)?$");
+            var expected = DefaultVendorNameService
+                .CustomMediaTypePattern.Replace("#VENDOR_NAME#", "rocket");
+
+            acceptHeaderPattern.ShouldEqual(expected);
         }
 
         [TestCaseSource(typeof(TestCaseSources), "NullOrWhitespace")]
         public void When_place_holder_is_null_or_empty_expect_no_exception(string placeHolder)
         {
-            var vendorNameProvider = new Mock<IVendorNameProvider>();
+            var vendorNameProvider = new Mock<IVendorNameService>();
 
             vendorNameProvider
                 .Setup(m => m.GetName())
@@ -89,7 +93,7 @@ namespace Rocket.Routing.Test.Unit
                 .Returns("PATTERN");
 
             var acceptHeaderPatternProvider =
-                new AcceptHeaderPatternProvider(vendorNameProvider.Object);
+                new AcceptHeaderPatternService(vendorNameProvider.Object);
 
             var acceptHeaderPattern = acceptHeaderPatternProvider.Get();
 
@@ -99,7 +103,7 @@ namespace Rocket.Routing.Test.Unit
         [Test]
         public void When_pattern_is_not_found_expect_no_exception()
         {
-            var vendorNameProvider = new Mock<IVendorNameProvider>();
+            var vendorNameProvider = new Mock<IVendorNameService>();
 
             vendorNameProvider
                 .Setup(m => m.GetName())
@@ -114,7 +118,7 @@ namespace Rocket.Routing.Test.Unit
                 .Returns("NO_PLACE_HOLDER");
 
             var acceptHeaderPatternProvider =
-                new AcceptHeaderPatternProvider(vendorNameProvider.Object);
+                new AcceptHeaderPatternService(vendorNameProvider.Object);
 
             var acceptHeaderPattern = acceptHeaderPatternProvider.Get();
 
@@ -124,7 +128,7 @@ namespace Rocket.Routing.Test.Unit
         [Test]
         public void When_specifying_name_pattern_and_place_holder_expect_replaced_pattern()
         {
-            var vendorNameProvider = new Mock<IVendorNameProvider>();
+            var vendorNameProvider = new Mock<IVendorNameService>();
 
             vendorNameProvider
                 .Setup(m => m.GetName())
@@ -139,7 +143,7 @@ namespace Rocket.Routing.Test.Unit
                 .Returns("PATTERN_#NAME_PATTERN");
 
             var acceptHeaderPatternProvider =
-                new AcceptHeaderPatternProvider(vendorNameProvider.Object);
+                new AcceptHeaderPatternService(vendorNameProvider.Object);
 
             var acceptHeaderPattern = acceptHeaderPatternProvider.Get();
 

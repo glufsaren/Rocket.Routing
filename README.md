@@ -2,13 +2,10 @@
 
 Rocket.Routing uses a route constraint in order to enable versioning of REST APIs. If no version is specified the route marked with `isLatest`.
 
-This README would normally document whatever steps are necessary to get your application up and running.
+## Quick summary ##
 
-### What is this repository for? ###
-
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* Verision 1.0.0.0
+* [Repository](https://bitbucket.org/glufsaren/rocket.routing/)
 
 ### How do I get set up? ###
 
@@ -19,16 +16,26 @@ This README would normally document whatever steps are necessary to get your app
 * How to run tests
 * Deployment instructions
 
-### Contribution guidelines ###
+## Configuration ##
 
-* Writing tests
-* Code review
-* Other guidelines
+### Inversion of Control ###
 
-### Who do I talk to? ###
+Rocket.Routing is configured with the [Autofac](http://autofac.org/) Container. You need to register the `RoutingModule` in your application, add this to your Autofac bootstrap code:
 
-* Repo owner or admin
-* Other community or team contact
+	builder.RegisterModule(new RoutingModule(config));
+
+You should be able to use an other IoC container by replacing the configuration in `RoutingModule`.
+
+### Request id ###
+
+To track your request a request id is created when the request is handled. The request is available during the request and is also added to the response headers and sent to the client.
+by default the request id will be fetched from the `HttpRequestMessage.GetCorrelationId()` if you want to override this functionality implement the `IRequestIdService` and set up your IoC container to use your implementation that provides your id of choice.
+The information about the request is stored in `HttpRequestMessage.Properties` if you want to store the information in another place  implement the `IAcceptHeaderStoreService` and set up your IoC container to use your implementation that provides your id of choice.
+
+### Vendor name ###
+To specify what domain to match, implement `IVendorNameService` and configure your implementation in the IoC container. It is recommended to inherit the `DefaultVendorNameService` and override the `GetName` method.
+
+## Usage ##
 
 <a class="anchor" id="versioning"></a>
 	<h2>API Versioning</h2>

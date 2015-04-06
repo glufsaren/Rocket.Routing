@@ -13,6 +13,10 @@ using Moq;
 
 using NUnit.Framework;
 
+using Rocket.Core.Diagnostics;
+using Rocket.Routing.Model;
+using Rocket.Routing.Model.ValueObjects;
+using Rocket.Routing.Services.Contracts;
 using Rocket.Test;
 
 using Should;
@@ -47,9 +51,12 @@ namespace Rocket.Routing.Test.Unit
                     .Setup(m => m.Match("application/vnd.rocket+json; version=1", 1, true))
                     .Returns(true);
 
+                var log = new Mock<ILog>();
+
                 _versionConstraint = new VersionConstraint(1, true)
                                          {
-                                             RoutingService = _routingService.Object
+                                             RoutingService = _routingService.Object,
+                                             Log = log.Object
                                          };
             }
 
@@ -68,11 +75,8 @@ namespace Rocket.Routing.Test.Unit
             private static AcceptHeader CreateAcceptHeader(
                 double requestedVersion = 1)
             {
-                return new AcceptHeader
-                           {
-                               ContentType = ContentType.Json,
-                               RequestedVersion = requestedVersion
-                           };
+                return new AcceptHeader(
+                    ContentType.Json, requestedVersion);
             }
         }
     }

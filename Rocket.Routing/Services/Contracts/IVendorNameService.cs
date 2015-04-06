@@ -1,19 +1,20 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IRoutingService.cs" company="Borderline Studios">
+// <copyright file="IVendorNameService.cs" company="Borderline Studios">
 //   Copyright © Borderline Studios. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the IRoutingService type.
+//   Defines the IVendorNameService type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rocket.Routing
+namespace Rocket.Routing.Services.Contracts
 {
-    public interface IRoutingService
+    public interface IVendorNameService
     {
-        bool Match(
-            string acceptHeaderValue,
-            double version,
-            bool isLatest);
+        string GetName();
+
+        string GetPlaceHolder();
+
+        string GetPattern();
     }
 }

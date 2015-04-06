@@ -4,7 +4,7 @@ using Rocket.Routing;
 
 namespace Routing.Controllers
 {
-    //[RoutePrefix("api/orders")]
+    [RoutePrefix("api/orders")]
     public class OrderController : ApiController
     {
         [HttpGet]

@@ -11,27 +11,23 @@ using System;
 using System.Text.RegularExpressions;
 
 using Rocket.Core.Extensions;
+using Rocket.Routing.Model.ValueObjects;
 
-namespace Rocket.Routing
+namespace Rocket.Routing.Model.Factories
 {
     internal static class AcceptHeaderFactory
     {
         public static AcceptHeader Create(Match match)
         {
-            return new AcceptHeader
-                       {
-                           RequestedVersion = ParseVersion(match),
-                           ContentType = ParseContentType(match)
-                       };
+            return new AcceptHeader(
+                        ParseContentType(match),
+                        ParseVersion(match));
         }
 
         public static AcceptHeader Default()
         {
-            return new AcceptHeader
-                       {
-                           RequestedVersion = null,
-                           ContentType = ContentType.Json
-                       };
+            return new AcceptHeader(
+                ContentType.Json, null);
         }
 
         private static double? ParseVersion(Match match)

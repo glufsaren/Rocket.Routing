@@ -13,6 +13,8 @@ using System.Net.Http.Headers;
 using System.Web.Http.Dependencies;
 using System.Web.Http.Routing;
 
+using Rocket.Core.Diagnostics;
+using Rocket.Routing.Services.Contracts;
 using Rocket.Web.Extensions;
 
 namespace Rocket.Routing
@@ -32,6 +34,8 @@ namespace Rocket.Routing
         }
 
         public IRoutingService RoutingService { get; set; }
+
+        public ILog Log { get; set; }
 
         public bool Match(
             HttpRequestMessage httpRequestMessage,
@@ -59,6 +63,12 @@ namespace Rocket.Routing
             var acceptHeaderValue =
                 httpRequestHeaders.TryGetHeader(AcceptHeader);
 
+            Log.DebugFormat(
+                    "Route request for: Header; [{0}]; Version: [{1}]; Latest: [{2}]",
+                    acceptHeaderValue,
+                    _version,
+                    _isLatest);
+
             return RoutingService.Match(
                 acceptHeaderValue, _version, _isLatest);
         }
@@ -67,6 +77,8 @@ namespace Rocket.Routing
         {
             RoutingService = dependencyScope
                 .GetService<IRoutingService>();
+
+            Log = dependencyScope.GetService<ILog>();
         }
     }
 }

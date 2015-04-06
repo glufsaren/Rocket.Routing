@@ -1,9 +1,9 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RequestIdProvider.cs" company="Borderline Studios">
+// <copyright file="RequestIdService.cs" company="Borderline Studios">
 //   Copyright © Borderline Studios. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the RequestIdProvider type.
+//   Defines the RequestIdService type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -12,20 +12,22 @@ using System.Net.Http;
 
 using JetBrains.Annotations;
 
-namespace Rocket.Routing
+using Rocket.Routing.Services.Contracts;
+
+namespace Rocket.Routing.Services
 {
     /// <inheritdoc/>
     [UsedImplicitly]
-    internal sealed class RequestIdProvider : IRequestIdProvider
+    public sealed class RequestIdService : IRequestIdService
     {
-        private readonly IHttpRequestMessageResolver _httpRequestMessageResolver;
+        private readonly IHttpRequestMessageResolverService _httpRequestMessageResolver;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RequestIdProvider"/> class.
+        /// Initializes a new instance of the <see cref="RequestIdService"/> class.
         /// </summary>
         /// <param name="httpRequestMessageResolver">The HTTP request message resolver.</param>
-        public RequestIdProvider(
-            IHttpRequestMessageResolver httpRequestMessageResolver)
+        public RequestIdService(
+            IHttpRequestMessageResolverService httpRequestMessageResolver)
         {
             _httpRequestMessageResolver = httpRequestMessageResolver;
         }

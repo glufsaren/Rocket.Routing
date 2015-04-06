@@ -11,26 +11,29 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Rocket.Routing.Model;
+using Rocket.Routing.Model.Entities;
 using Rocket.Routing.Model.ValueObjects;
+using Rocket.Routing.Services.Contracts;
 using Rocket.Web.Extensions;
 
 namespace Rocket.Routing
 {
     public class MessageHeadersHandler : DelegatingHandler
     {
-        public IVendorNameProvider VendorNameProvider { get; set; }
+        public IVendorNameService VendorNameService { get; set; }
 
-        public IAcceptHeaderStore AcceptHeaderStore { get; set; }
+        public IAcceptHeaderStoreService AcceptHeaderStoreService { get; set; }
 
-        public IRequestIdProvider RequestIdProvider { get; set; }
+        public IRequestIdService RequestIdService { get; set; }
 
         internal void AddResponseHeaders(
             HttpResponseMessage responseMessage)
         {
             var vendorName =
-                new VendorName(VendorNameProvider.GetName());
+                new VendorName(VendorNameService.GetName());
 
-            var mediaType = AcceptHeaderStore.Get();
+            var mediaType = AcceptHeaderStoreService.Get();
 
             responseMessage.Headers.Add(
                 MediaType.GetMediaTypeHeaderName(vendorName.Value),
@@ -38,7 +41,7 @@ namespace Rocket.Routing
 
             responseMessage.Headers.Add(
                 MediaType.GetRequestIdHeaderName(vendorName.Value),
-                GetRequestId(mediaType, RequestIdProvider));
+                GetRequestId(mediaType, RequestIdService));
         }
 
         protected async override Task<HttpResponseMessage> SendAsync(
@@ -55,23 +58,23 @@ namespace Rocket.Routing
         }
 
         private static string GetRequestId(
-            MediaType mediaType, IRequestIdProvider requestIdProvider)
+            MediaType mediaType, IRequestIdService requestIdService)
         {
             return mediaType.HasRequestId()
                     ? mediaType.RequestId.ToString()
-                    : requestIdProvider.Get().ToString();
+                    : requestIdService.Get().ToString();
         }
 
         private void BuildUp(HttpRequestMessage requestMessage)
         {
-            VendorNameProvider = requestMessage
-                .GetService<IVendorNameProvider>();
+            VendorNameService = requestMessage
+                .GetService<IVendorNameService>();
 
-            AcceptHeaderStore = requestMessage
-                .GetService<IAcceptHeaderStore>();
+            AcceptHeaderStoreService = requestMessage
+                .GetService<IAcceptHeaderStoreService>();
 
-            RequestIdProvider = requestMessage
-                .GetService<IRequestIdProvider>();
+            RequestIdService = requestMessage
+                .GetService<IRequestIdService>();
         }
     }
 }

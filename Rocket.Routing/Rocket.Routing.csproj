@@ -68,36 +68,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AcceptHeader.cs" />
-    <Compile Include="AcceptHeaderFactory.cs" />
-    <Compile Include="AcceptHeaderParser.cs" />
-    <Compile Include="AcceptHeaderPatternProvider.cs" />
-    <Compile Include="HttpRequestMessageResolver.cs" />
-    <Compile Include="ContentType.cs" />
-    <Compile Include="DefaultVendorNameProvider.cs" />
-    <Compile Include="IAcceptHeaderPatternProvider.cs" />
-    <Compile Include="IAcceptHeaderStore.cs" />
-    <Compile Include="IHeaderParser.cs" />
-    <Compile Include="IHttpRequestMessageResolver.cs" />
-    <Compile Include="IRequestIdProvider.cs" />
-    <Compile Include="IRoutingService.cs" />
-    <Compile Include="IVendorNameProvider.cs" />
-    <Compile Include="MediaType.cs" />
-    <Compile Include="MediaTypeExtensions.cs" />
     <Compile Include="MessageHeadersHandler.cs" />
+    <Compile Include="Model\ContentType.cs" />
+    <Compile Include="Model\Entities\MediaType.cs" />
+    <Compile Include="Model\Entities\RequestPropertiesMediaType.cs" />
+    <Compile Include="Model\Factories\AcceptHeaderFactory.cs" />
+    <Compile Include="Model\MediaTypeExtensions.cs" />
+    <Compile Include="Model\ValueObjects\AcceptHeader.cs" />
     <Compile Include="Model\ValueObjects\VendorName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RequestIdProvider.cs" />
-    <Compile Include="RequestPropertiesAcceptHeaderStore.cs" />
-    <Compile Include="RequestPropertiesMediaType.cs" />
     <Compile Include="RoutingModule.cs" />
-    <Compile Include="RoutingService.cs" />
+    <Compile Include="Services\AcceptHeaderParserService.cs" />
+    <Compile Include="Services\AcceptHeaderPatternService.cs" />
+    <Compile Include="Services\Contracts\IAcceptHeaderPatternService.cs" />
+    <Compile Include="Services\Contracts\IAcceptHeaderStoreService.cs" />
+    <Compile Include="Services\Contracts\IHeaderParserService.cs" />
+    <Compile Include="Services\Contracts\IHttpRequestMessageResolverService.cs" />
+    <Compile Include="Services\Contracts\IRequestIdService.cs" />
+    <Compile Include="Services\Contracts\IRoutingService.cs" />
+    <Compile Include="Services\Contracts\IVendorNameService.cs" />
+    <Compile Include="Services\DefaultVendorNameService.cs" />
+    <Compile Include="Services\HttpRequestMessageResolverService.cs" />
+    <Compile Include="Services\RequestIdService.cs" />
+    <Compile Include="Services\RequestPropertiesAcceptHeaderStoreService.cs" />
+    <Compile Include="Services\RoutingService.cs" />
     <Compile Include="VersionConstraint.cs" />
     <Compile Include="VersionedRouteAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Rocket.Routing.1.0.0.0.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Rocket\Rocket.Core\Rocket.Core.csproj">
@@ -109,12 +110,7 @@
       <Name>Rocket.Web</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\Entities\" />
-    <Folder Include="Model\Factories\" />
-    <Folder Include="Providers\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

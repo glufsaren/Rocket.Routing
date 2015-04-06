@@ -1,20 +1,20 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IRequestIdProvider.cs" company="Borderline Studios">
+// <copyright file="IRequestIdService.cs" company="Borderline Studios">
 //   Copyright © Borderline Studios. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the IRequestIdProvider type.
+//   Defines the IRequestIdService type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
 
-namespace Rocket.Routing
+namespace Rocket.Routing.Services.Contracts
 {
     /// <summary>
     /// Used to provide the request id (correlation id) used to track requests and responses.
     /// </summary>
-    public interface IRequestIdProvider
+    public interface IRequestIdService
     {
         /// <summary>
         /// Gets a unique identifier.

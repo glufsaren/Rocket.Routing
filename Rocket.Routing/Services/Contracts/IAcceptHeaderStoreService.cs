@@ -1,15 +1,18 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IAcceptHeaderStore.cs" company="Borderline Studios">
+// <copyright file="IAcceptHeaderStoreService.cs" company="Borderline Studios">
 //   Copyright © Borderline Studios. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the IAcceptHeaderStore type.
+//   Defines the IAcceptHeaderStoreService type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rocket.Routing
+using Rocket.Routing.Model.Entities;
+using Rocket.Routing.Model.ValueObjects;
+
+namespace Rocket.Routing.Services.Contracts
 {
-    public interface IAcceptHeaderStore
+    public interface IAcceptHeaderStoreService
     {
         void Set(AcceptHeader acceptHeader);
 

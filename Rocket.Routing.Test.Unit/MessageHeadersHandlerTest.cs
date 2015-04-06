@@ -14,6 +14,9 @@ using Moq;
 
 using NUnit.Framework;
 
+using Rocket.Routing.Model;
+using Rocket.Routing.Model.Entities;
+using Rocket.Routing.Services.Contracts;
 using Rocket.Test;
 
 using Rocket.Web.Extensions;
@@ -43,21 +46,21 @@ namespace Rocket.Routing.Test.Unit
                                         RequestId = new Guid("55B3D509-D610-403E-8D61-5C66AD64F1D5")
                                     };
 
-                var vendorNameProvider = new Mock<IVendorNameProvider>();
+                var vendorNameProvider = new Mock<IVendorNameService>();
                 vendorNameProvider
                     .Setup(m => m.GetName())
                     .Returns("rocket");
 
-                var acceptHeaderStore = new Mock<IAcceptHeaderStore>();
+                var acceptHeaderStore = new Mock<IAcceptHeaderStoreService>();
                 acceptHeaderStore.Setup(m => m.Get()).Returns(mediaType);
 
-                var requestIdProvider = new Mock<IRequestIdProvider>(MockBehavior.Strict);
+                var requestIdProvider = new Mock<IRequestIdService>(MockBehavior.Strict);
 
                 _messageHeadersHandler = new MessageHeadersHandler
                                              {
-                                                 VendorNameProvider = vendorNameProvider.Object,
-                                                 AcceptHeaderStore = acceptHeaderStore.Object,
-                                                 RequestIdProvider = requestIdProvider.Object
+                                                 VendorNameService = vendorNameProvider.Object,
+                                                 AcceptHeaderStoreService = acceptHeaderStore.Object,
+                                                 RequestIdService = requestIdProvider.Object
                                              };
 
                 _responseMessage = new HttpResponseMessage();
@@ -109,24 +112,24 @@ namespace Rocket.Routing.Test.Unit
                     RequestId = Guid.Empty
                 };
 
-                var vendorNameProvider = new Mock<IVendorNameProvider>();
+                var vendorNameProvider = new Mock<IVendorNameService>();
                 vendorNameProvider
                     .Setup(m => m.GetName())
                     .Returns("rocket");
 
-                var acceptHeaderStore = new Mock<IAcceptHeaderStore>();
+                var acceptHeaderStore = new Mock<IAcceptHeaderStoreService>();
                 acceptHeaderStore.Setup(m => m.Get()).Returns(mediaType);
 
-                var requestIdProvider = new Mock<IRequestIdProvider>();
+                var requestIdProvider = new Mock<IRequestIdService>();
                 requestIdProvider
                     .Setup(m => m.Get())
                     .Returns(new Guid("DC81D99E-F73E-4DBB-8273-75C92A1D3C83"));
 
                 _messageHeadersHandler = new MessageHeadersHandler
                 {
-                    VendorNameProvider = vendorNameProvider.Object,
-                    AcceptHeaderStore = acceptHeaderStore.Object,
-                    RequestIdProvider = requestIdProvider.Object
+                    VendorNameService = vendorNameProvider.Object,
+                    AcceptHeaderStoreService = acceptHeaderStore.Object,
+                    RequestIdService = requestIdProvider.Object
                 };
 
                 _responseMessage = new HttpResponseMessage();

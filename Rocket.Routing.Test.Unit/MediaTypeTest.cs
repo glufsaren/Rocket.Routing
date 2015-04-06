@@ -9,6 +9,8 @@
 
 using NUnit.Framework;
 
+using Rocket.Routing.Model;
+using Rocket.Routing.Model.Entities;
 using Rocket.Test;
 
 using Should;

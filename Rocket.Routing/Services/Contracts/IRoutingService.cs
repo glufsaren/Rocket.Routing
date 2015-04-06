@@ -1,16 +1,19 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IAcceptHeaderPatternProvider.cs" company="Borderline Studios">
+// <copyright file="IRoutingService.cs" company="Borderline Studios">
 //   Copyright © Borderline Studios. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the IAcceptHeaderPatternProvider type.
+//   Defines the IRoutingService type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rocket.Routing
+namespace Rocket.Routing.Services.Contracts
 {
-    public interface IAcceptHeaderPatternProvider
+    public interface IRoutingService
     {
-        string Get();
+        bool Match(
+            string acceptHeaderValue,
+            double version,
+            bool isLatest);
     }
 }

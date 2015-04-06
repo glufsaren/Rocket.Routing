@@ -11,6 +11,9 @@ using System.Text.RegularExpressions;
 
 using NUnit.Framework;
 
+using Rocket.Routing.Model;
+using Rocket.Routing.Model.Factories;
+using Rocket.Routing.Model.ValueObjects;
 using Rocket.Test;
 
 using Should;

@@ -1,15 +1,15 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IHeaderParser.cs" company="Borderline Studios">
+// <copyright file="IHeaderParserService.cs" company="Borderline Studios">
 //   Copyright © Borderline Studios. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the IHeaderParser type.
+//   Defines the IHeaderParserService type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rocket.Routing
+namespace Rocket.Routing.Services.Contracts
 {
-    public interface IHeaderParser<out T>
+    public interface IHeaderParserService<out T>
     {
         T Parse(string headerValue);
     }

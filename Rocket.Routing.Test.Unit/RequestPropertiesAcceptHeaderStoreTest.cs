@@ -14,6 +14,11 @@ using Moq;
 
 using NUnit.Framework;
 
+using Rocket.Routing.Model;
+using Rocket.Routing.Model.Entities;
+using Rocket.Routing.Model.ValueObjects;
+using Rocket.Routing.Services;
+using Rocket.Routing.Services.Contracts;
 using Rocket.Test;
 
 using Should;
@@ -26,47 +31,43 @@ namespace Rocket.Routing.Test.Unit
         [TestFixture]
         public class When_setting_accept_header_that_does_not_match : BaseUnitTest
         {
-            private RequestPropertiesAcceptHeaderStore _requestPropertiesAcceptHeaderStore;
+            private RequestPropertiesAcceptHeaderStoreService _requestPropertiesAcceptHeaderStoreService;
             private MediaType _mediaType;
 
             protected override void Arrange()
             {
                 var httpRequestMessageResolver =
-                    new Mock<IHttpRequestMessageResolver>();
+                    new Mock<IHttpRequestMessageResolverService>();
 
                 httpRequestMessageResolver
                         .Setup(m => m.Current())
                         .Returns(new HttpRequestMessage());
 
                 var requestIdProvider =
-                    new Mock<IRequestIdProvider>();
+                    new Mock<IRequestIdService>();
 
                 requestIdProvider
                     .Setup(m => m.Get())
                     .Returns(new Guid("757DB7D0-859E-4E9E-ABA0-23D312F18541"));
 
-                _requestPropertiesAcceptHeaderStore = new RequestPropertiesAcceptHeaderStore(
+                _requestPropertiesAcceptHeaderStoreService = new RequestPropertiesAcceptHeaderStoreService(
                     requestIdProvider.Object, httpRequestMessageResolver.Object);
 
                 var acceptHeader = CreateAcceptHeader();
                 acceptHeader.MatchHeaderVersion(1, false);
 
-                _requestPropertiesAcceptHeaderStore
+                _requestPropertiesAcceptHeaderStoreService
                     .Set(acceptHeader);
             }
 
             private static AcceptHeader CreateAcceptHeader()
             {
-                return new AcceptHeader
-                           {
-                               ContentType = ContentType.Xml,
-                               RequestedVersion = 2.1
-                           };
+                return new AcceptHeader(ContentType.Xml, 2.1);
             }
 
             protected override void Act()
             {
-                _mediaType = _requestPropertiesAcceptHeaderStore.Get();
+                _mediaType = _requestPropertiesAcceptHeaderStoreService.Get();
             }
 
             [Test]
@@ -104,47 +105,43 @@ namespace Rocket.Routing.Test.Unit
         [TestFixture]
         public class When_setting_accept_header_that_matches : BaseUnitTest
         {
-            private RequestPropertiesAcceptHeaderStore _requestPropertiesAcceptHeaderStore;
+            private RequestPropertiesAcceptHeaderStoreService _requestPropertiesAcceptHeaderStoreService;
             private MediaType _mediaType;
 
             protected override void Arrange()
             {
                 var httpRequestMessageResolver =
-                    new Mock<IHttpRequestMessageResolver>();
+                    new Mock<IHttpRequestMessageResolverService>();
 
                 httpRequestMessageResolver
                         .Setup(m => m.Current())
                         .Returns(new HttpRequestMessage());
 
                 var requestIdProvider =
-                    new Mock<IRequestIdProvider>();
+                    new Mock<IRequestIdService>();
 
                 requestIdProvider
                     .Setup(m => m.Get())
                     .Returns(new Guid("757DB7D0-859E-4E9E-ABA0-23D312F18541"));
 
-                _requestPropertiesAcceptHeaderStore = new RequestPropertiesAcceptHeaderStore(
+                _requestPropertiesAcceptHeaderStoreService = new RequestPropertiesAcceptHeaderStoreService(
                     requestIdProvider.Object, httpRequestMessageResolver.Object);
 
                 var acceptHeader = CreateAcceptHeader();
                 acceptHeader.MatchHeaderVersion(2.1, true);
 
-                _requestPropertiesAcceptHeaderStore
+                _requestPropertiesAcceptHeaderStoreService
                     .Set(acceptHeader);
             }
 
             private static AcceptHeader CreateAcceptHeader()
             {
-                return new AcceptHeader
-                           {
-                               ContentType = ContentType.Xml,
-                               RequestedVersion = 2.1
-                           };
+                return new AcceptHeader(ContentType.Xml, 2.1);
             }
 
             protected override void Act()
             {
-                _mediaType = _requestPropertiesAcceptHeaderStore.Get();
+                _mediaType = _requestPropertiesAcceptHeaderStoreService.Get();
             }
 
             [Test]

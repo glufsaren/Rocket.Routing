@@ -12,7 +12,7 @@ using System.Text;
 
 using Rocket.Core.Extensions;
 
-namespace Rocket.Routing
+namespace Rocket.Routing.Model.Entities
 {
     public class MediaType
     {

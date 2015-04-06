@@ -1,35 +1,47 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AcceptHeaderParser.cs" company="Borderline Studios">
+// <copyright file="AcceptHeaderParserService.cs" company="Borderline Studios">
 //   Copyright © Borderline Studios. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the AcceptHeaderParser type.
+//   Defines the AcceptHeaderParserService type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Rocket.Routing
-{
-    internal sealed class AcceptHeaderParser : IHeaderParser<AcceptHeader>
-    {
-        private readonly IAcceptHeaderPatternProvider _acceptHeaderPatternProvider;
+using Rocket.Core.Diagnostics;
+using Rocket.Routing.Model.Factories;
+using Rocket.Routing.Model.ValueObjects;
+using Rocket.Routing.Services.Contracts;
 
-        public AcceptHeaderParser(
-            IAcceptHeaderPatternProvider acceptHeaderPatternProvider)
+namespace Rocket.Routing.Services
+{
+    public sealed class AcceptHeaderParserService : IHeaderParserService<AcceptHeader>
+    {
+        private readonly IAcceptHeaderPatternService _acceptHeaderPatternService;
+        private readonly ILog _log;
+
+        public AcceptHeaderParserService(
+            IAcceptHeaderPatternService acceptHeaderPatternService,
+            ILog log)
         {
-            _acceptHeaderPatternProvider = acceptHeaderPatternProvider;
+            _acceptHeaderPatternService = acceptHeaderPatternService;
+            _log = log;
         }
 
         public AcceptHeader Parse(string acceptHeader)
         {
             if (string.IsNullOrWhiteSpace(acceptHeader))
             {
+                _log.Debug("No accept header specified.");
                 return null;
             }
 
             var pattern = GetPattern();
+            _log.DebugFormat(
+                    "Using pattern: {0}",
+                    pattern);
 
             if (string.IsNullOrWhiteSpace(pattern))
             {
@@ -56,7 +68,7 @@ namespace Rocket.Routing
 
         private string GetPattern()
         {
-            return _acceptHeaderPatternProvider.Get() ?? string.Empty;
+            return _acceptHeaderPatternService.Get() ?? string.Empty;
         }
     }
 }

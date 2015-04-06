@@ -136,10 +136,11 @@ namespace Rocket.Routing.Test.Component
         }
 
         [TestFixture]
-        public class When_no_vendor_is_specified_in_accept_header : BaseComponentTest
+        public class When_no_version_is_specified_in_accept_header : BaseComponentTest
         {
             private Result<string> _result;
             private HttpServerHost _httpServerHostHost;
+            private string _mediaTypeHeader;
             private string _requestIdHeader;
             private Dictionary<string, string> _headers;
 
@@ -149,7 +150,7 @@ namespace Rocket.Routing.Test.Component
                                   {
                                       {
                                           "accept",
-                                          "application/vnd.acme.se+json"
+                                          "application/vnd.rocket.se+json"
                                       }
                                   };
 
@@ -167,6 +168,9 @@ namespace Rocket.Routing.Test.Component
 
             protected override void Assemble()
             {
+                _mediaTypeHeader = _result.HttpResponseMessage
+                    .TryGetHeader("X-Rocket-Media-Type");
+
                 _requestIdHeader = _result.HttpResponseMessage
                     .TryGetHeader("X-Rocket-Request-Id");
             }
@@ -177,10 +181,22 @@ namespace Rocket.Routing.Test.Component
             }
 
             [Test]
-            public void It_should_not_find_a_route()
+            public void It_should_match_latest()
+            {
+                _result.ResultObject.ShouldEqual("{\"version\":\"2\",\"isLatest\":\"true\"}");
+            }
+
+            [Test]
+            public void It_should_add_actual_version_in_response()
+            {
+                _mediaTypeHeader.ShouldEqual("Rocket.v2; format=json;");
+            }
+
+            [Test]
+            public void It_should_find_a_route()
             {
                 _result.HttpResponseMessage
-                    .StatusCode.ShouldEqual(HttpStatusCode.NotFound);
+                    .StatusCode.ShouldEqual(HttpStatusCode.OK);
             }
 
             [Test]

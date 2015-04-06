@@ -9,9 +9,11 @@
 
 using System;
 
-namespace Rocket.Routing
+using Rocket.Routing.Model.Entities;
+
+namespace Rocket.Routing.Model
 {
-    public static class MediaTypeExtensions
+    internal static class MediaTypeExtensions
     {
         public static bool HasRequestId(this MediaType mediaType)
         {

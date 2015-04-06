@@ -1,20 +1,16 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IVendorNameProvider.cs" company="Borderline Studios">
+// <copyright file="IAcceptHeaderPatternService.cs" company="Borderline Studios">
 //   Copyright © Borderline Studios. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the IVendorNameProvider type.
+//   Defines the IAcceptHeaderPatternService type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rocket.Routing
+namespace Rocket.Routing.Services.Contracts
 {
-    public interface IVendorNameProvider
+    public interface IAcceptHeaderPatternService
     {
-        string GetName();
-
-        string GetPlaceHolder();
-
-        string GetPattern();
+        string Get();
     }
 }

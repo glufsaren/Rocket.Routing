@@ -9,11 +9,13 @@
 
 using System.Net.Http;
 
+using Rocket.Routing.Services;
+using Rocket.Routing.Services.Contracts;
 using Rocket.Test;
 
 namespace Rocket.Routing.Test.Component
 {
-    public class SelfHostHttpRequestMessageResolver : IHttpRequestMessageResolver
+    public class SelfHostHttpRequestMessageResolver : IHttpRequestMessageResolverService
     {
         private readonly HttpServerHost _httpServerHost;
 

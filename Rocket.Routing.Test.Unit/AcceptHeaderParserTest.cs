@@ -11,6 +11,9 @@ using Moq;
 
 using NUnit.Framework;
 
+using Rocket.Core.Diagnostics;
+using Rocket.Routing.Services;
+using Rocket.Routing.Services.Contracts;
 using Rocket.Test;
 
 using Should;
@@ -27,14 +30,16 @@ namespace Rocket.Routing.Test.Unit
         public void When_pattern_is_null_expect_null()
         {
             var acceptHeaderPatternProvider =
-                new Mock<IAcceptHeaderPatternProvider>();
+                new Mock<IAcceptHeaderPatternService>();
 
             acceptHeaderPatternProvider
                 .Setup(m => m.Get())
                 .Returns((string)null);
 
-            var acceptHeaderParser = new AcceptHeaderParser(
-                acceptHeaderPatternProvider.Object);
+            var log = new Mock<ILog>();
+
+            var acceptHeaderParser = new AcceptHeaderParserService(
+                acceptHeaderPatternProvider.Object, log.Object);
 
             var acceptHeader = acceptHeaderParser
                 .Parse("application/vnd.rocket.se+json; version=1;");
@@ -46,14 +51,16 @@ namespace Rocket.Routing.Test.Unit
         public void When_header_is_null_or_empty_expect_null(string headerValue)
         {
             var acceptHeaderPatternProvider =
-                new Mock<IAcceptHeaderPatternProvider>();
+                new Mock<IAcceptHeaderPatternService>();
 
             acceptHeaderPatternProvider
                  .Setup(m => m.Get())
                  .Returns(Pattern);
 
-            var acceptHeaderParser = new AcceptHeaderParser(
-                acceptHeaderPatternProvider.Object);
+            var log = new Mock<ILog>();
+
+            var acceptHeaderParser = new AcceptHeaderParserService(
+                acceptHeaderPatternProvider.Object, log.Object);
 
             var acceptHeader =
                 acceptHeaderParser.Parse(headerValue);
