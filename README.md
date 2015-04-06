@@ -13,18 +13,19 @@ Rocket.Routing uses a route constraint in order to enable versioning of REST API
 
 Rocket.Routing is configured with the [Autofac](http://autofac.org/) Container. You need to register the `RoutingModule` in your application, add this to your Autofac bootstrap code:
 
-builder.RegisterModule(new RoutingModule(config));
+	builder.RegisterModule(new RoutingModule(config));
 
-You should be able to use an other IoC container by replacing the configuration in `RoutingModule`.
+You should be able to use another IoC container by replacing the Autofac IoC configuration, see the `RoutingModule` for information on how to configure.
 
 ### Request id ###
 
-To track your request a request id is created when the request is handled. The request is available during the request and is also added to the response headers and sent to the client.
-by default the request id will be fetched from the `HttpRequestMessage.GetCorrelationId()` if you want to override this functionality implement the `IRequestIdService` and set up your IoC container to use your implementation that provides your id of choice.
-The information about the request is stored in `HttpRequestMessage.Properties` if you want to store the information in another place  implement the `IAcceptHeaderStoreService` and set up your IoC container to use your implementation that provides your id of choice.
+To track your requests a request id is created for each request when handled. The request id is available during the entire request and is also added to the response headers and sent to the client.
+By default the request id will be fetched from the `HttpRequestMessage.GetCorrelationId()` if you want to override this functionality implement the `IRequestIdService` and set up your IoC container to use an implementation that provides your id of choice.
+
+The information about the request is stored in `HttpRequestMessage.Properties` if you want to store the information in another place  implement the `IAcceptHeaderStoreService` and set up your IoC container to use an implementation that uses your store of choice.
 
 ### Vendor name ###
-To specify what domain to match, implement `IVendorNameService` and configure your implementation in the IoC container. It is recommended to inherit the `DefaultVendorNameService` and override the `GetName` method.
+To specify what domain to match, implement `IVendorNameService` and configure your implementation in the IoC container. It is recommended to inherit the `DefaultVendorNameService` and override the `GetName` method to specify your vendor name.
 
 ## Usage ##
 
@@ -32,7 +33,7 @@ Use the `Accept` header to specify in what format the content should be received
 
 The format for the custom header should follow:
 
-application/vnd.[VENDOR_NAME][.DOMAIN][+FORMAT];[ version=VERSION;]
+	application/vnd.[VENDOR_NAME]([.DOMAIN])([+FORMAT];)([ version=VERSION;])
 
 Regular media types are supported:
 
