@@ -48,9 +48,11 @@ as well as custom media types:
 To check in what format the content was received check the `X-[VENDOR_NAME]-Media-Type` response header:
 
 Example:
+	
 	X-Rocket-Media-Type: rocket.v1; format=json;
 
 The request id will be added to the `X-[VENDOR_NAME]-Request-Id`
 
 Example:
+	
 	X-Rocket-Request-Id: a381cf7d-7502-4da2-b50c-4e9e8a24c97f
