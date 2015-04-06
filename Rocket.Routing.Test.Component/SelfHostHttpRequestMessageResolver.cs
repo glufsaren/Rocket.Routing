@@ -9,7 +9,6 @@
 
 using System.Net.Http;
 
-using Rocket.Routing.Services;
 using Rocket.Routing.Services.Contracts;
 using Rocket.Test;
 

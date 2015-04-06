@@ -64,7 +64,6 @@
     <Compile Include="AcceptHeaderFactoryTest.cs" />
     <Compile Include="AcceptHeaderTest.cs" />
     <Compile Include="MediaTypeExtensionsTest.cs" />
-    <Compile Include="MediaTypePropertiesTest.cs" />
     <Compile Include="AcceptHeaderParserTest.cs" />
     <Compile Include="MediaTypeTest.cs" />
     <Compile Include="MessageHeadersHandlerTest.cs" />

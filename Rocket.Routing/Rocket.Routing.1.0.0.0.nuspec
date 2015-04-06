@@ -1,23 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
-        <id>Rocket.DbC</id>
+        <id>Rocket.Routing</id>
         <version>1.0.0.0</version>
-        <title>Rocket.DbC</title>
+        <title>Rocket.Routing</title>
         <authors>John Tjust</authors>
         <owners>John Tjust</owners>
         <licenseUrl>http://apache.org/licenses/LICENSE-2.0</licenseUrl>
-        <projectUrl>https://bitbucket.org/glufsaren/rocket.dbc/overview</projectUrl>
-        <iconUrl>https://bytebucket.org/glufsaren/rocket.dbc/raw/becff29633ae52a4d993581bf8b8e9123bd88ec0/Logo_icon.png</iconUrl>
+        <projectUrl>https://bitbucket.org/glufsaren/rocket.routing/overview</projectUrl>
+        <iconUrl>https://bytebucket.org/glufsaren/rocket.routing/raw/535fc843fd39a99a8426bac4c1cd3e0bc9a4d99c/Logo_icon.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>Simple Design by contract library supporting PreConditions and PostConditions</description>
+        <description>Simple REST versioning library</description>
         <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
-        <copyright>Copyright 2014</copyright>
-        <tags>DbC, Design by contract, PreCondition, PostCondition, Code Contracts, contract programming, programming design-by-contract</tags>
+        <copyright>Copyright 2015</copyright>
+        <tags>REST, Verisoning, VersionConstraint, Web API, VersionedRoute</tags>
     </metadata>
     <files>
-        <file src="bin\Release\Rocket.DbC.dll" target="lib\Rocket.DbC.dll" />
-        <file src="bin\Release\Rocket.DbC.pdb" target="lib\Rocket.DbC.pdb" />
-        <file src="bin\Release\Rocket.DbC.xml" target="lib\Rocket.DbC.xml" />
+        <file src="bin\Release\Rocket.Routing.dll" target="lib\Rocket.Routing.dll" />
+        <file src="bin\Release\Rocket.Routing.pdb" target="lib\Rocket.Routing.pdb" />
+        <file src="bin\Release\Rocket.Routing.xml" target="lib\Rocket.Routing.xml" />
     </files>
 </package>

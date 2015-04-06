@@ -48,67 +48,67 @@ namespace Rocket.Routing.Test.Unit
             {
                 _acceptHeader.ContentType.ShouldEqual(ContentType.Json);
             }
+        }
 
-            [TestFixture]
-            public class When_creating_from_empty_match : BaseUnitTest
+        [TestFixture]
+        public class When_creating_from_empty_match : BaseUnitTest
+        {
+            private AcceptHeader _acceptHeader;
+
+            private Match _match;
+
+            protected override void Arrange()
             {
-                private AcceptHeader _acceptHeader;
-
-                private Match _match;
-
-                protected override void Arrange()
-                {
-                    _match = Match.Empty;
-                }
-
-                protected override void Act()
-                {
-                    _acceptHeader = AcceptHeaderFactory.Create(_match);
-                }
-
-                [Test]
-                public void It_sets_requested_version_to_null()
-                {
-                    _acceptHeader.RequestedVersion.ShouldBeNull();
-                }
-
-                [Test]
-                public void It_sets_content_type_to_json()
-                {
-                    _acceptHeader.ContentType.ShouldEqual(ContentType.Json);
-                }
+                _match = Match.Empty;
             }
 
-            [TestFixture]
-            public class When_creating_from_match : BaseUnitTest
+            protected override void Act()
             {
-                private AcceptHeader _acceptHeader;
+                _acceptHeader = AcceptHeaderFactory.Create(_match);
+            }
 
-                private Match _match;
+            [Test]
+            public void It_sets_requested_version_to_null()
+            {
+                _acceptHeader.RequestedVersion.ShouldBeNull();
+            }
 
-                protected override void Arrange()
-                {
-                    _match = Regex.Match(
-                            "+xml; version=1.5;", 
-                            @"^(\+?(?<contenttype>[a-zA-Z0-9-\.]*?));?(\sversion=(?<version>\d+(\.\d+)*);?)?$");
-                }
+            [Test]
+            public void It_sets_content_type_to_json()
+            {
+                _acceptHeader.ContentType.ShouldEqual(ContentType.Json);
+            }
+        }
 
-                protected override void Act()
-                {
-                    _acceptHeader = AcceptHeaderFactory.Create(_match);
-                }
+        [TestFixture]
+        public class When_creating_from_match : BaseUnitTest
+        {
+            private AcceptHeader _acceptHeader;
 
-                [Test]
-                public void It_sets_requested_version_to_null()
-                {
-                    _acceptHeader.RequestedVersion.ShouldEqual(1.5);
-                }
+            private Match _match;
 
-                [Test]
-                public void It_sets_content_type_to_json()
-                {
-                    _acceptHeader.ContentType.ShouldEqual(ContentType.Xml);
-                }
+            protected override void Arrange()
+            {
+                _match = Regex.Match(
+                        "+xml; version=1.5;",
+                        @"^(\+?(?<contenttype>[a-zA-Z0-9-\.]*?));?(\sversion=(?<version>\d+(\.\d+)*);?)?$");
+            }
+
+            protected override void Act()
+            {
+                _acceptHeader = AcceptHeaderFactory.Create(_match);
+            }
+
+            [Test]
+            public void It_sets_requested_version_to_null()
+            {
+                _acceptHeader.RequestedVersion.ShouldEqual(1.5);
+            }
+
+            [Test]
+            public void It_sets_content_type_to_json()
+            {
+                _acceptHeader.ContentType.ShouldEqual(ContentType.Xml);
             }
         }
     }

@@ -28,6 +28,7 @@ namespace Rocket.Routing.Test.Unit
     [TestFixture]
     public class MessageHeadersHandlerTest
     {
+        [TestFixture]
         public class When_adding_response_headers : BaseUnitTest
         {
             private MessageHeadersHandler _messageHeadersHandler;
@@ -94,6 +95,7 @@ namespace Rocket.Routing.Test.Unit
             }
         }
 
+        [TestFixture]
         public class When_adding_response_headers_and_media_type_has_no_request_id : BaseUnitTest
         {
             private MessageHeadersHandler _messageHeadersHandler;

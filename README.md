@@ -7,22 +7,13 @@ Rocket.Routing uses a route constraint in order to enable versioning of REST API
 * Verision 1.0.0.0
 * [Repository](https://bitbucket.org/glufsaren/rocket.routing/)
 
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
 ## Configuration ##
 
 ### Inversion of Control ###
 
 Rocket.Routing is configured with the [Autofac](http://autofac.org/) Container. You need to register the `RoutingModule` in your application, add this to your Autofac bootstrap code:
 
-	builder.RegisterModule(new RoutingModule(config));
+builder.RegisterModule(new RoutingModule(config));
 
 You should be able to use an other IoC container by replacing the configuration in `RoutingModule`.
 
@@ -37,18 +28,28 @@ To specify what domain to match, implement `IVendorNameService` and configure yo
 
 ## Usage ##
 
-<a class="anchor" id="versioning"></a>
-	<h2>API Versioning</h2>
-	<p>
-		The <code>Accept</code> header is used to specify in what format the content should be received. If no <code>Accept</code> header is specified the content will be returned in json with the last version of the resource.
-		Version and content type are optional and will default to latest version of the resource and json if not specified.
-		<br /><br />The format for the custom header should follow:<pre><code class="hljs github json hljs">application/vnd.rocket[.<b>domain</b>][+<b>format</b>];[ version=<b>version</b>;]</code></pre>
-		Regular media types are supported:<pre><code class="hljs github json hljs">application/json</code></pre>
-		as well as custom media types:<pre><code class="hljs github json hljs">application/vnd.rocket.com;
-application/vnd.rocket.com+json;
-application/vnd.rocket.se+json; version=1;</code></pre>
-	<p class="api-note"><strong>Important</strong>: Please note that the latest version of the API may change, therefore it's recommended that you always specify a specific version of the API in the <code>Accept</code> header.</p>
-	<p>To check in what format the content was received check the <code>X-Rocket-Media-Type</code> response header</p>
-	<pre><code class="hljs github json hljs ">HTTP/1.1 200 OK
-X-Rocket-Media-Type: rocket.v1; format=json</code></pre>
-	<hr />
+Use the `Accept` header to specify in what format the content should be received. If no `Accept` header is specified the content will be returned in json with the last version of the resource. Version and content type are optional and will default to latest version of the resource and json if not specified.
+
+The format for the custom header should follow:
+
+application/vnd.[VENDOR_NAME][.DOMAIN][+FORMAT];[ version=VERSION;]
+
+Regular media types are supported:
+
+	application/json
+
+as well as custom media types:
+
+	application/vnd.rocket.se;
+	application/vnd.rocket.se+json;
+	application/vnd.rocket.se+json; version=1;
+
+To check in what format the content was received check the `X-[VENDOR_NAME]-Media-Type` response header:
+
+Example:
+	X-Rocket-Media-Type: rocket.v1; format=json;
+
+The request id will be added to the `X-[VENDOR_NAME]-Request-Id`
+
+Example:
+	X-Rocket-Request-Id: a381cf7d-7502-4da2-b50c-4e9e8a24c97f
