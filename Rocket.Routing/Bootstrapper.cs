@@ -14,9 +14,18 @@ namespace Rocket.Routing
     {
         private static A a;
 
+        static Bootstrapper()
+        {
+            ////GlobalConfiguration.Configuration.MessageHandlers.Add(new MessageHeadersHandler());
+        }
+
         public static void Initialize(HttpConfiguration httpConfiguration)
         {
+            ////httpConfiguration.MessageHandlers.Add(new MessageHeadersHandler());
+
             LazyInitializer.EnsureInitialized(ref a, () => new A(httpConfiguration));
+
+            ////a = new A(httpConfiguration);
         }
 
         private class A
@@ -26,8 +35,7 @@ namespace Rocket.Routing
 
             public A(HttpConfiguration httpConfiguration)
             {
-                httpConfiguration.MessageHandlers
-                    .Add(new MessageHeadersHandler());
+                httpConfiguration.MessageHandlers.Add(new MessageHeadersHandler());
 
                 System.Uri uri = new System.Uri(Assembly.GetExecutingAssembly().GetName().CodeBase);
                 string path = Path.GetDirectoryName(uri.LocalPath);
@@ -50,9 +58,6 @@ namespace Rocket.Routing
                 container.ComposeParts(this);
 
                 BootstrapperExp.Configure(httpConfiguration);
-
-
-                
             }
         }
     }

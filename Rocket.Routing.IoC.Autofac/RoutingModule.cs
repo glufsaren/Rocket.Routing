@@ -88,10 +88,6 @@ namespace Rocket.Routing.IoC.Autofac
 
             var x = (AutofacWebApiDependencyResolver)configuration.DependencyResolver;
 
-
-            //containerBuilder
-            //    .RegisterModule(new RoutingModule(configuration));
-            
             containerBuilder
                 .RegisterModule(this);
 

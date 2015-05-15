@@ -10,7 +10,6 @@
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web.Http;
 
 using Rocket.Routing.Model;
 using Rocket.Routing.Model.Entities;
@@ -68,17 +67,8 @@ namespace Rocket.Routing
 
         private void BuildUp(HttpRequestMessage httpRequestMessage)
         {
-            HttpConfiguration httpConfiguration;
-            if (httpRequestMessage.Properties.ContainsKey("MS_HttpConfiguration"))
-            {
-                httpConfiguration = httpRequestMessage.Properties["MS_HttpConfiguration"] as HttpConfiguration;
-            }
-            else
-            {
-                httpConfiguration = GlobalConfiguration.Configuration;
-            }
-
-            Bootstrapper.Initialize(httpConfiguration);
+            Bootstrapper.Initialize(
+                httpRequestMessage.Configuration());
 
             VendorNameService = httpRequestMessage
                 .GetService<IVendorNameService>();
