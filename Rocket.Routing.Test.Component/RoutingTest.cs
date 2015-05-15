@@ -38,7 +38,8 @@ namespace Rocket.Routing.Test.Component
                 _httpServerHostHost = new HttpServerHostBuilder()
                     .AddDependencyResolver(httpServerHost => new AutofacConfig(httpServerHost))
                     .Endpoint("http://localhost:1000/api/orders/")
-                    .MapRoute<OrderController>("api/orders");
+                    .MapRoute<OrderController>("api/orders")
+                    .Configure(config => config.MessageHandlers.Add(new MessageHeadersHandler()));
             }
 
             protected override void Act()
@@ -109,7 +110,10 @@ namespace Rocket.Routing.Test.Component
                 _httpServerHostHost = new HttpServerHostBuilder()
                     .AddDependencyResolver(httpServerHost => new AutofacConfig(httpServerHost))
                     .Endpoint("http://localhost:1000/api/orders/")
-                    .MapRoute<OrderController>("api/orders");
+                    .MapRoute<OrderController>("api/orders")
+                .Configure(config => config.MessageHandlers.Add(new MessageHeadersHandler()));
+
+                ////_httpServerHostHost.HttpConfiguration.MessageHandlers.Add(new MessageHeadersHandler());
             }
 
             protected override void Act()
@@ -177,10 +181,12 @@ namespace Rocket.Routing.Test.Component
                                       }
                                   };
 
-                _httpServerHostHost = new HttpServerHostBuilder()
-                    .AddDependencyResolver(httpServerHost => new AutofacConfig(httpServerHost))
-                    .Endpoint("http://localhost:1000/api/orders/")
-                    .MapRoute<OrderController>("api/orders");
+                _httpServerHostHost =
+                    new HttpServerHostBuilder().AddDependencyResolver(
+                        httpServerHost => new AutofacConfig(httpServerHost))
+                        .Endpoint("http://localhost:1000/api/orders/")
+                        .MapRoute<OrderController>("api/orders")
+                .Configure(config => config.MessageHandlers.Add(new MessageHeadersHandler()));
             }
 
             protected override void Act()
@@ -252,6 +258,8 @@ namespace Rocket.Routing.Test.Component
                     .AddDependencyResolver(httpServerHost => new AutofacConfig(httpServerHost))
                     .Endpoint("http://localhost:1000/api/orders/")
                     .MapRoute<OrderController>("api/orders");
+
+                _httpServerHostHost.HttpConfiguration.MessageHandlers.Add(new MessageHeadersHandler());
             }
 
             protected override void Act()
@@ -322,7 +330,8 @@ namespace Rocket.Routing.Test.Component
                 _httpServerHostHost = new HttpServerHostBuilder()
                     .AddDependencyResolver(httpServerHost => new AutofacConfig(httpServerHost))
                     .Endpoint("http://localhost:1000/api/orders/")
-                    .MapRoute<OrderController>("api/orders");
+                    .MapRoute<OrderController>("api/orders")
+                .Configure(config => config.MessageHandlers.Add(new MessageHeadersHandler()));
             }
 
             protected override void Act()
@@ -392,7 +401,8 @@ namespace Rocket.Routing.Test.Component
                 _httpServerHostHost = new HttpServerHostBuilder()
                     .AddDependencyResolver(httpServerHost => new AutofacConfig(httpServerHost))
                     .Endpoint("http://localhost:1000/api/orders/")
-                    .MapRoute<OrderController>("api/orders");
+                    .MapRoute<OrderController>("api/orders")
+                .Configure(config => config.MessageHandlers.Add(new MessageHeadersHandler()));
             }
 
             protected override void Act()

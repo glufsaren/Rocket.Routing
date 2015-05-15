@@ -19,7 +19,7 @@ using Rocket.Routing.Services.Contracts;
 namespace Rocket.Routing.Services
 {
     [UsedImplicitly]
-    public sealed class RoutingService : IRoutingService
+    internal sealed class RoutingService : IRoutingService
     {
         private readonly IHeaderParserService<AcceptHeader> _headerParserService;
         private readonly IAcceptHeaderStoreService _acceptHeaderStoreService;

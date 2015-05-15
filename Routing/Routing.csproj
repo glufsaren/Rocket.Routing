@@ -312,6 +312,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Rocket.Routing.IoC.Autofac\Rocket.Routing.IoC.Autofac.csproj">
+      <Project>{884898CE-8395-4953-9A2E-55E783B9582B}</Project>
+      <Name>Rocket.Routing.IoC.Autofac</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Rocket.Routing\Rocket.Routing.csproj">
       <Project>{BE3DACC9-878E-41B9-AF93-F671B26A669D}</Project>
       <Name>Rocket.Routing</Name>

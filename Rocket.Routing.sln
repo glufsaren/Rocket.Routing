@@ -22,6 +22,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Routing.IoC.Autofac", "Rocket.Routing.IoC.Autofac\Rocket.Routing.IoC.Autofac.csproj", "{884898CE-8395-4953-9A2E-55E783B9582B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Routing.IoC.StructureMap", "Rocket.Routing.IoC.StructureMap\Rocket.Routing.IoC.StructureMap.csproj", "{02F833B4-EA3B-40DD-9695-B200F74D6AA0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +60,14 @@ Global
 		{3AD629B7-6D2F-42AB-920B-CD847AE97020}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AD629B7-6D2F-42AB-920B-CD847AE97020}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AD629B7-6D2F-42AB-920B-CD847AE97020}.Release|Any CPU.Build.0 = Release|Any CPU
+		{884898CE-8395-4953-9A2E-55E783B9582B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{884898CE-8395-4953-9A2E-55E783B9582B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{884898CE-8395-4953-9A2E-55E783B9582B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{884898CE-8395-4953-9A2E-55E783B9582B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02F833B4-EA3B-40DD-9695-B200F74D6AA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02F833B4-EA3B-40DD-9695-B200F74D6AA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02F833B4-EA3B-40DD-9695-B200F74D6AA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02F833B4-EA3B-40DD-9695-B200F74D6AA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

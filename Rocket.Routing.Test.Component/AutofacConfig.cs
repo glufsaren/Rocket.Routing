@@ -14,6 +14,9 @@ using System.Web.Http.Dependencies;
 using Autofac;
 using Autofac.Integration.WebApi;
 
+using Rocket.Core.Diagnostics;
+using Rocket.Routing.IoC.Autofac;
+using Rocket.Routing.Model.ValueObjects;
 using Rocket.Routing.Services;
 using Rocket.Routing.Services.Contracts;
 using Rocket.Test;
@@ -35,7 +38,8 @@ namespace Rocket.Routing.Test.Component
         {
             var builder = new ContainerBuilder();
 
-            var executingAssembly = Assembly.GetExecutingAssembly();
+            var executingAssembly = Assembly
+                .GetAssembly(typeof(VersionedRouteAttribute));
 
             builder
                 .RegisterApiControllers(executingAssembly);
@@ -44,11 +48,14 @@ namespace Rocket.Routing.Test.Component
                 .Where(t => !t.IsAbstract && typeof(ApiController).IsAssignableFrom(t));
 
             builder
-                .RegisterModule(new RoutingModule(HttpConfiguration));
-
-            builder
                 .Register(o => new SelfHostHttpRequestMessageResolver(_httpServerHost))
                 .As<IHttpRequestMessageResolverService>();
+
+            builder.RegisterModule(
+                new RoutingModule(HttpConfiguration));
+
+            //HttpConfiguration.MessageHandlers
+            //    .Add(new MessageHeadersHandler());
 
             var container = builder.Build();
 

@@ -13,7 +13,6 @@ using System.Web.Http;
 using Autofac;
 using Autofac.Integration.WebApi;
 
-using Rocket.Routing;
 using Rocket.Routing.Services.Contracts;
 
 namespace Routing
@@ -33,9 +32,6 @@ namespace Routing
                 .RegisterAssemblyTypes(executingAssembly)
                 .Where(t => !t.IsAbstract && typeof(ApiController).IsAssignableFrom(t))
                 .InstancePerRequest();
-
-            builder
-                .RegisterModule(new RoutingModule(config));
 
             builder
                 .RegisterType<DefaultVendorNameService>()

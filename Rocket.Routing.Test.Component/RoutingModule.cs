@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Web.Http;
 
 using Autofac;
+using Autofac.Integration.WebApi;
 
 using Rocket.Core.Diagnostics;
 using Rocket.Routing.Model.ValueObjects;
@@ -19,11 +20,27 @@ using Rocket.Routing.Services.Contracts;
 
 using Module = Autofac.Module;
 
-namespace Rocket.Routing
+namespace Rocket.Routing.IoC.Autofac
 {
     public class RoutingModule : Module
     {
-        private readonly HttpConfiguration _httpConfiguration;
+        private HttpConfiguration _httpConfiguration;
+
+        //public HttpConfiguration HttpConfiguration
+        //{
+        //    get
+        //    {
+        //        return _httpConfiguration;
+        //    }
+        //    set
+        //    {
+        //        _httpConfiguration = value;
+        //    }
+        //}
+
+        //public RoutingModule()
+        //{
+        //}
 
         public RoutingModule(
             HttpConfiguration httpConfiguration)
@@ -33,32 +50,34 @@ namespace Rocket.Routing
 
         protected override void Load(ContainerBuilder builder)
         {
-            _httpConfiguration.MessageHandlers
-                .Add(new MessageHeadersHandler());
-
-            var assembly = Assembly.GetExecutingAssembly();
+            var assembly = Assembly
+                .GetAssembly(typeof(VersionedRouteAttribute));
 
             builder
                 .RegisterAssemblyTypes(assembly)
                 .Where(t => t.Name.EndsWith("Service"))
                 .AsImplementedInterfaces()
-                .InstancePerRequest();
+                .InstancePerRequest()
+                .PreserveExistingDefaults();
 
             builder
                 .RegisterAssemblyTypes(assembly)
                 .Where(t => t.Name.EndsWith("Provider"))
                 .AsImplementedInterfaces()
-                .InstancePerRequest();
+                .InstancePerRequest()
+                .PreserveExistingDefaults();
 
             builder
                 .RegisterType<AcceptHeaderParserService>()
                 .As<IHeaderParserService<AcceptHeader>>()
-                .InstancePerRequest();
+                .InstancePerRequest()
+                .PreserveExistingDefaults();
 
             builder
                 .Register(b => new Log("Rocket.Routing"))
                 .As<ILog>()
-                .InstancePerRequest();
+                .InstancePerRequest()
+                .PreserveExistingDefaults();
         }
     }
 }

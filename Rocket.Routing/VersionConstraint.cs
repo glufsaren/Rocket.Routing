@@ -10,7 +10,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Web.Http.Dependencies;
+using System.Web.Http;
 using System.Web.Http.Routing;
 
 using Rocket.Core.Diagnostics;
@@ -33,9 +33,9 @@ namespace Rocket.Routing
             _version = version;
         }
 
-        public IRoutingService RoutingService { get; set; }
+        public IRoutingService RoutingService { private get; set; }
 
-        public ILog Log { get; set; }
+        public ILog Log { private get; set; }
 
         public bool Match(
             HttpRequestMessage httpRequestMessage,
@@ -49,10 +49,7 @@ namespace Rocket.Routing
                 return false;
             }
 
-            var dependencyScope =
-                httpRequestMessage.GetDependencyScope();
-
-            BuildUp(dependencyScope);
+            BuildUp(httpRequestMessage);
 
             return Match(
                 httpRequestMessage.Headers);
@@ -73,12 +70,23 @@ namespace Rocket.Routing
                 acceptHeaderValue, _version, _isLatest);
         }
 
-        private void BuildUp(IDependencyScope dependencyScope)
+        private void BuildUp(HttpRequestMessage httpRequestMessage)
         {
-            RoutingService = dependencyScope
-                .GetService<IRoutingService>();
+            HttpConfiguration httpConfiguration;
+            if (httpRequestMessage.Properties.ContainsKey("MS_HttpConfiguration"))
+            {
+                httpConfiguration = httpRequestMessage.Properties["MS_HttpConfiguration"] as HttpConfiguration;
+            }
+            else
+            {
+                httpConfiguration = GlobalConfiguration.Configuration;
+            }
 
-            Log = dependencyScope.GetService<ILog>();
+            Bootstrapper.Initialize(httpConfiguration);
+
+            RoutingService = httpRequestMessage.GetService<IRoutingService>();
+
+            Log = httpRequestMessage.GetService<ILog>();
         }
     }
 }

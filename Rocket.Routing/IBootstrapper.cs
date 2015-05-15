@@ -1,18 +1,18 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IHttpRequestMessageResolverService.cs" company="Borderline Studios">
+// <copyright file="IBootstrapper.cs" company="Borderline Studios">
 //   Copyright © Borderline Studios. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the IHttpRequestMessageResolverService type.
+//   Defines the IBootstrapper type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Net.Http;
+using System.Web.Http;
 
-namespace Rocket.Routing.Services.Contracts
+namespace Rocket.Routing
 {
-    public interface IHttpRequestMessageResolverService
+    public interface IBootstrapper
     {
-        HttpRequestMessage Current();
+        void Configure(HttpConfiguration configuration);
     }
 }
