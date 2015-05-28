@@ -7,6 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.ComponentModel.Composition;
 using System.Reflection;
 using System.Web.Http;
@@ -26,29 +27,35 @@ namespace Rocket.Routing.IoC.Autofac
     [Export(typeof(IBootstrapper))]
     public class RoutingModule : Module, IBootstrapper
     {
-        //private HttpConfiguration _httpConfiguration;
+        public void Configure(HttpConfiguration configuration)
+        {
+            if (configuration == null)
+            {
+                throw new ArgumentNullException("configuration");
+            }
 
-        //public HttpConfiguration HttpConfiguration
-        //{
-        //    get
-        //    {
-        //        return _httpConfiguration;
-        //    }
-        //    set
-        //    {
-        //        _httpConfiguration = value;
-        //    }
-        //}
+            var dependencyResolver = configuration
+                .DependencyResolver as AutofacWebApiDependencyResolver;
 
-        //public RoutingModule()
-        //{
-        //}
+            if (dependencyResolver == null)
+            {
+                return;
+            }
 
-        //private RoutingModule(
-        //    HttpConfiguration httpConfiguration)
-        //{
-        //    _httpConfiguration = httpConfiguration;
-        //}
+            var containerBuilder = new ContainerBuilder();
+
+            containerBuilder.RegisterModule(this);
+
+            var container = dependencyResolver
+                .Container as IContainer;
+
+            if (container == null)
+            {
+                return;
+            }
+
+            containerBuilder.Update(container);
+        }
 
         protected override void Load(ContainerBuilder builder)
         {
@@ -80,20 +87,6 @@ namespace Rocket.Routing.IoC.Autofac
                 .As<ILog>()
                 .InstancePerRequest()
                 .PreserveExistingDefaults();
-        }
-
-        public void Configure(HttpConfiguration configuration)
-        {
-            var containerBuilder = new ContainerBuilder();
-
-            var x = (AutofacWebApiDependencyResolver)configuration.DependencyResolver;
-
-            containerBuilder
-                .RegisterModule(this);
-
-            IContainer c = (IContainer)x.Container;
-
-            containerBuilder.Update(c);
         }
     }
 }

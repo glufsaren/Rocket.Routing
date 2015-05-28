@@ -10,7 +10,6 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Web.Http;
 using System.Web.Http.Routing;
 
 using Rocket.Core.Diagnostics;

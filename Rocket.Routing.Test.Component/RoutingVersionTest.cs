@@ -47,6 +47,9 @@ namespace Rocket.Routing.Test.Component
                     .AddDependencyResolver(httpServerHost => new AutofacConfig(httpServerHost))
                     .Endpoint("http://localhost:1000/api/orders/")
                     .MapRoute<OrderController>("api/orders");
+
+                Bootstrapper.Initialize(
+                    _httpServerHostHost.HttpConfiguration);
             }
 
             protected override void Act()
@@ -64,6 +67,7 @@ namespace Rocket.Routing.Test.Component
             protected override void TearDown()
             {
                 _httpServerHostHost.Dispose();
+                Bootstrapper.Reset();
             }
 
             [Test]
@@ -102,6 +106,9 @@ namespace Rocket.Routing.Test.Component
                     .AddDependencyResolver(httpServerHost => new AutofacConfig(httpServerHost))
                     .Endpoint("http://localhost:1000/api/orders/")
                     .MapRoute<OrderController>("api/orders");
+
+                Bootstrapper.Initialize(
+                    _httpServerHostHost.HttpConfiguration);
             }
 
             protected override void Act()
@@ -119,6 +126,7 @@ namespace Rocket.Routing.Test.Component
             protected override void TearDown()
             {
                 _httpServerHostHost.Dispose();
+                Bootstrapper.Reset();
             }
 
             [Test]
@@ -157,8 +165,10 @@ namespace Rocket.Routing.Test.Component
                 _httpServerHostHost = new HttpServerHostBuilder()
                     .AddDependencyResolver(httpServerHost => new AutofacConfig(httpServerHost))
                     .Endpoint("http://localhost:1000/api/orders/")
-                    .MapRoute<OrderController>("api/orders")
-                ;//.Configure(config => config.MessageHandlers.Add(new MessageHeadersHandler()));
+                    .MapRoute<OrderController>("api/orders");
+
+                Bootstrapper.Initialize(
+                    _httpServerHostHost.HttpConfiguration);
             }
 
             protected override void Act()
@@ -179,6 +189,7 @@ namespace Rocket.Routing.Test.Component
             protected override void TearDown()
             {
                 _httpServerHostHost.Dispose();
+                Bootstrapper.Reset();
             }
 
             [Test]

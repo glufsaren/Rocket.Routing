@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="IBootstrapper.cs" />
+    <Compile Include="Initializer.cs" />
     <Compile Include="MessageHeadersHandler.cs" />
     <Compile Include="Model\ContentType.cs" />
     <Compile Include="Model\Entities\MediaType.cs" />

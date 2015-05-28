@@ -1,10 +1,15 @@
-﻿using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Bootstrapper.cs" company="Borderline Studios">
+//   Copyright © Borderline Studios. All rights reserved.
+// </copyright>
+// <summary>
+//   Defines the Bootstrapper type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.ComponentModel.Composition;
 using System.Threading;
-using System.Web;
 using System.Web.Http;
 
 namespace Rocket.Routing
@@ -12,53 +17,18 @@ namespace Rocket.Routing
     [Export]
     internal class Bootstrapper
     {
-        private static A a;
-
-        static Bootstrapper()
-        {
-            ////GlobalConfiguration.Configuration.MessageHandlers.Add(new MessageHeadersHandler());
-        }
+        //[ThreadStatic]
+        private static Initializer initializer;
 
         public static void Initialize(HttpConfiguration httpConfiguration)
         {
-            ////httpConfiguration.MessageHandlers.Add(new MessageHeadersHandler());
-
-            LazyInitializer.EnsureInitialized(ref a, () => new A(httpConfiguration));
-
-            ////a = new A(httpConfiguration);
+            LazyInitializer.EnsureInitialized(
+                ref initializer, () => new Initializer(httpConfiguration));
         }
 
-        private class A
+        internal static void Reset()
         {
-            [Import]
-            public IBootstrapper BootstrapperExp { get; set; }
-
-            public A(HttpConfiguration httpConfiguration)
-            {
-                httpConfiguration.MessageHandlers.Add(new MessageHeadersHandler());
-
-                System.Uri uri = new System.Uri(Assembly.GetExecutingAssembly().GetName().CodeBase);
-                string path = Path.GetDirectoryName(uri.LocalPath);
-                //var catalog = new DirectoryCatalog(path);
-
-                //Trace.WriteLine(catalog.FullPath);
-
-                //An aggregate catalog that combines multiple catalogs
-                var catalog = new AggregateCatalog();
-
-                //Adds all the parts found in same directory where the application is running!
-                ////var currentPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(this.GetType()).Location);
-
-                //catalog.Catalogs.Add(new DirectoryCatalog(Path.Combine(HttpRuntime.AppDomainAppPath, "bin")));
-                catalog.Catalogs.Add(new DirectoryCatalog(path));
-
-
-                //var catalog = new DirectoryCatalog(@".\");
-                var container = new CompositionContainer(catalog);
-                container.ComposeParts(this);
-
-                BootstrapperExp.Configure(httpConfiguration);
-            }
+            initializer = null;
         }
     }
 }
