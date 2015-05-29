@@ -24,6 +24,7 @@ namespace Routing
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutofacConfig.RegisterComponents(GlobalConfiguration.Configuration);
+            ////StructureMapConfig.RegisterComponents(GlobalConfiguration.Configuration);
         }
     }
 }

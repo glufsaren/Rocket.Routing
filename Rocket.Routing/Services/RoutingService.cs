@@ -9,8 +9,6 @@
 
 using System;
 
-using JetBrains.Annotations;
-
 using Rocket.Core.Diagnostics;
 using Rocket.Routing.Model.Factories;
 using Rocket.Routing.Model.ValueObjects;
@@ -18,8 +16,7 @@ using Rocket.Routing.Services.Contracts;
 
 namespace Rocket.Routing.Services
 {
-    [UsedImplicitly]
-    internal sealed class RoutingService : IRoutingService
+    public sealed class RoutingService : IRoutingService
     {
         private readonly IHeaderParserService<AcceptHeader> _headerParserService;
         private readonly IAcceptHeaderStoreService _acceptHeaderStoreService;

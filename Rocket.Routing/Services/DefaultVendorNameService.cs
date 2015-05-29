@@ -7,13 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using JetBrains.Annotations;
-
 using Rocket.Routing.Services.Contracts;
 
 namespace Rocket.Routing.Services
 {
-    [UsedImplicitly]
     public class DefaultVendorNameService : IVendorNameService
     {
         public const string DefaultVendorName = "acme";

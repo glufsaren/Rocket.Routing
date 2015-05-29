@@ -7,15 +7,12 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using JetBrains.Annotations;
-
 using Rocket.Routing.Model.Entities;
 using Rocket.Routing.Model.ValueObjects;
 using Rocket.Routing.Services.Contracts;
 
 namespace Rocket.Routing.Services
 {
-    [UsedImplicitly]
     public sealed class RequestPropertiesAcceptHeaderStoreService : IAcceptHeaderStoreService
     {
         private readonly IRequestIdService _requestIdService;

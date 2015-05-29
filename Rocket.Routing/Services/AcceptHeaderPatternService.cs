@@ -7,14 +7,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using JetBrains.Annotations;
-
 using Rocket.Routing.Services.Contracts;
 
 namespace Rocket.Routing.Services
 {
-    [UsedImplicitly]
-    internal sealed class AcceptHeaderPatternService : IAcceptHeaderPatternService
+    public sealed class AcceptHeaderPatternService : IAcceptHeaderPatternService
     {
         private readonly IVendorNameService _vendorNameService;
 

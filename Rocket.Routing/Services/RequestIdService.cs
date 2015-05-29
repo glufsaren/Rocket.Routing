@@ -10,14 +10,11 @@
 using System;
 using System.Net.Http;
 
-using JetBrains.Annotations;
-
 using Rocket.Routing.Services.Contracts;
 
 namespace Rocket.Routing.Services
 {
     /// <inheritdoc/>
-    [UsedImplicitly]
     public sealed class RequestIdService : IRequestIdService
     {
         private readonly IHttpRequestMessageResolverService _httpRequestMessageResolver;

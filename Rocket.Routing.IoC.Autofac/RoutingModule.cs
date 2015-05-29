@@ -70,13 +70,6 @@ namespace Rocket.Routing.IoC.Autofac
                 .PreserveExistingDefaults();
 
             builder
-                .RegisterAssemblyTypes(assembly)
-                .Where(t => t.Name.EndsWith("Provider"))
-                .AsImplementedInterfaces()
-                .InstancePerRequest()
-                .PreserveExistingDefaults();
-
-            builder
                 .RegisterType<AcceptHeaderParserService>()
                 .As<IHeaderParserService<AcceptHeader>>()
                 .InstancePerRequest()

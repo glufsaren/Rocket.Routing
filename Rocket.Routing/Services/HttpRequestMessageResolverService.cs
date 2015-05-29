@@ -10,13 +10,10 @@
 using System.Net.Http;
 using System.Web;
 
-using JetBrains.Annotations;
-
 using Rocket.Routing.Services.Contracts;
 
 namespace Rocket.Routing.Services
 {
-    [UsedImplicitly]
     public sealed class HttpRequestMessageResolverService : IHttpRequestMessageResolverService
     {
         public HttpRequestMessage Current()
