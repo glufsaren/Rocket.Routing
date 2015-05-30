@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
+using Routing;
+
 namespace Rocket.Routing.UI.StructureMap
 {
     public class WebApiApplication : System.Web.HttpApplication
@@ -18,6 +20,7 @@ namespace Rocket.Routing.UI.StructureMap
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            StructureMapConfig.RegisterComponents(GlobalConfiguration.Configuration);
         }
     }
 }

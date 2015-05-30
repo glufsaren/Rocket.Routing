@@ -11,11 +11,8 @@ Rocket.Routing uses a route constraint in order to enable versioning of REST API
 
 ### Inversion of Control ###
 
-Rocket.Routing is configured with the [Autofac](http://autofac.org/) Container. You need to register the `RoutingModule` in your application, add this to your Autofac bootstrap code:
-
-	builder.RegisterModule(new RoutingModule(config));
-
-You should be able to use another IoC container by replacing the Autofac IoC configuration, see the `RoutingModule` for information on how to configure.
+IoC is controlled used [MEF](https://msdn.microsoft.com/en-us/library/dd460648%28v=vs.110%29.aspx). Either configure all dependencies or use one of the exiting IoC implementations.
+At the moment implementations for [Autofac](https://www.nuget.org/packages/Rocket.Routing.IoC.Autofac/) and [StructureMap](https://www.nuget.org/packages/Rocket.Routing.IoC.StructureMap) is available on NuGet.
 
 ### Request id ###
 

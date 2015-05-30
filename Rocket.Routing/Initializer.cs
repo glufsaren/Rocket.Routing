@@ -40,6 +40,11 @@ namespace Rocket.Routing
 
             container.ComposeParts(this);
 
+            if (Bootstrapper == null)
+            {
+                return;
+            }
+
             Bootstrapper.Configure(httpConfiguration);
         }
 

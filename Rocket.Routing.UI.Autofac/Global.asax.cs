@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
+using Routing;
+
 namespace Rocket.Routing.UI.Autofac
 {
     public class WebApiApplication : System.Web.HttpApplication
@@ -18,6 +20,7 @@ namespace Rocket.Routing.UI.Autofac
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            AutofacConfig.RegisterComponents(GlobalConfiguration.Configuration);
         }
     }
 }
