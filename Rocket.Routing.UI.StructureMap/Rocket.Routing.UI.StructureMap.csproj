@@ -44,19 +44,21 @@
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Rocket.Core">
-      <HintPath>..\packages\Rocket.Routing.1.0.0.0\lib\Rocket.Core.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Rocket.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rocket.Routing.1.0.0.1\lib\Rocket.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Rocket.Routing">
-      <HintPath>..\packages\Rocket.Routing.1.0.0.0\lib\Rocket.Routing.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Rocket.Routing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rocket.Routing.1.0.0.1\lib\Rocket.Routing.dll</HintPath>
     </Reference>
-    <Reference Include="Rocket.Routing.IoC.StructureMap">
+    <Reference Include="Rocket.Routing.IoC.StructureMap, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Rocket.Routing.IoC.StructureMap.1.0.0.0\lib\Rocket.Routing.IoC.StructureMap.dll</HintPath>
     </Reference>
-    <Reference Include="Rocket.Web">
-      <HintPath>..\packages\Rocket.Routing.1.0.0.0\lib\Rocket.Web.dll</HintPath>
+    <Reference Include="Rocket.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rocket.Routing.1.0.0.1\lib\Rocket.Web.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.3.1.5.154\lib\net40\StructureMap.dll</HintPath>
@@ -65,6 +67,7 @@
       <HintPath>..\packages\structuremap.3.1.5.154\lib\net40\StructureMap.Net4.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">

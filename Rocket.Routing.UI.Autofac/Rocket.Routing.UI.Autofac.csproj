@@ -40,28 +40,33 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac">
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Autofac.3.5.0\lib\net40\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="Autofac.Integration.WebApi">
+    <Reference Include="Autofac.Integration.WebApi, Version=3.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
     </Reference>
-    <Reference Include="log4net">
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Rocket.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Rocket.Core">
+      <HintPath>..\packages\Rocket.Routing.1.0.0.1\lib\Rocket.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Rocket.Routing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Rocket.Routing.1.0.0.0\lib\Rocket.Core.dll</HintPath>
+      <HintPath>..\packages\Rocket.Routing.1.0.0.1\lib\Rocket.Routing.dll</HintPath>
     </Reference>
-    <Reference Include="Rocket.Routing">
-      <HintPath>..\packages\Rocket.Routing.1.0.0.0\lib\Rocket.Routing.dll</HintPath>
-    </Reference>
-    <Reference Include="Rocket.Routing.IoC.Autofac">
+    <Reference Include="Rocket.Routing.IoC.Autofac, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Rocket.Routing.IoC.Autofac.1.0.0.0\lib\Rocket.Routing.IoC.Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="Rocket.Web">
-      <HintPath>..\packages\Rocket.Routing.1.0.0.0\lib\Rocket.Web.dll</HintPath>
+    <Reference Include="Rocket.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rocket.Routing.1.0.0.1\lib\Rocket.Web.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
