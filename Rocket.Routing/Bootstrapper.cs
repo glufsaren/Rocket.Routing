@@ -7,7 +7,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
 using System.ComponentModel.Composition;
 using System.Threading;
 using System.Web.Http;
@@ -17,7 +16,6 @@ namespace Rocket.Routing
     [Export]
     internal class Bootstrapper
     {
-        //[ThreadStatic]
         private static Initializer initializer;
 
         public static void Initialize(HttpConfiguration httpConfiguration)

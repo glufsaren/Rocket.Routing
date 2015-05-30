@@ -1,23 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
-    <metadata>
-        <id>Rocket.Routing</id>
-        <version>1.0.0.0</version>
-        <title>Rocket.Routing</title>
-        <authors>John Tjust</authors>
-        <owners>John Tjust</owners>
-        <licenseUrl>http://apache.org/licenses/LICENSE-2.0</licenseUrl>
-        <projectUrl>https://bitbucket.org/glufsaren/rocket.routing/overview</projectUrl>
-        <iconUrl>https://bytebucket.org/glufsaren/rocket.routing/raw/535fc843fd39a99a8426bac4c1cd3e0bc9a4d99c/Logo_icon.png</iconUrl>
-        <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>Simple REST versioning library</description>
-        <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
-        <copyright>Copyright 2015</copyright>
-        <tags>REST, Verisoning, VersionConstraint, Web API, VersionedRoute</tags>
-    </metadata>
-    <files>
-        <file src="bin\Release\Rocket.Routing.dll" target="lib\Rocket.Routing.dll" />
-        <file src="bin\Release\Rocket.Routing.pdb" target="lib\Rocket.Routing.pdb" />
-        <file src="bin\Release\Rocket.Routing.xml" target="lib\Rocket.Routing.xml" />
-    </files>
+	<metadata>
+		<id>Rocket.Routing</id>
+		<version>1.0.0.0</version>
+		<title>Rocket.Routing</title>
+		<authors>John Tjust</authors>
+		<owners>John Tjust</owners>
+		<licenseUrl>http://apache.org/licenses/LICENSE-2.0</licenseUrl>
+		<projectUrl>https://bitbucket.org/glufsaren/rocket.routing/overview</projectUrl>
+		<iconUrl>https://bytebucket.org/glufsaren/rocket.routing/raw/535fc843fd39a99a8426bac4c1cd3e0bc9a4d99c/Logo_icon.png</iconUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>Simple REST versioning library</description>
+		<releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+		<copyright>Copyright 2015</copyright>
+		<tags>REST Versioning VersionConstraint Web API VersionedRoute VersionedRouteAttribute</tags>
+		<dependencies>
+			<dependency id="Microsoft.AspNet.WebApi.WebHost" version="5.2.3" />
+			<dependency id="log4net" version="2.0.3" />
+		</dependencies>
+		<frameworkAssemblies>
+			<frameworkAssembly assemblyName="System.ComponentModel.Composition" targetFramework=".NETFramework4.5.1" />
+			<frameworkAssembly assemblyName="System.Web" targetFramework=".NETFramework4.5.1" />
+		</frameworkAssemblies>
+	</metadata>
+	<files>
+		<file src="bin\Release\Rocket.Routing.dll" target="lib\Rocket.Routing.dll" />
+		<file src="bin\Release\Rocket.Core.dll" target="lib\Rocket.Core.dll" />
+		<file src="bin\Release\Rocket.Web.dll" target="lib\Rocket.Web.dll" />
+	</files>
 </package>
