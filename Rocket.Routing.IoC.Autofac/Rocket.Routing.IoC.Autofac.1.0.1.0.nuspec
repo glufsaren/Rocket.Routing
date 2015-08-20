@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
 	<metadata>
 		<id>Rocket.Routing.IoC.Autofac</id>
-		<version>1.0.0.0</version>
+		<version>1.0.1.0</version>
 		<title>Rocket.Routing.IoC.Autofac</title>
 		<authors>John Tjust</authors>
 		<owners>John Tjust</owners>
@@ -18,7 +18,7 @@
 			<dependency id="Microsoft.AspNet.WebApi.WebHost" version="5.2.3" />
 			<dependency id="Microsoft.AspNet.WebApi" version="5.2.3" />
 			<dependency id="Autofac.WebApi2" version="3.4.0" />
-			<dependency id="Rocket.Routing" version="1.0.0.0" />
+			<dependency id="Rocket.Routing" version="1.0.1.0" />
 		</dependencies>
 		<frameworkAssemblies>
 			<frameworkAssembly assemblyName="System.ComponentModel.Composition" targetFramework=".NETFramework4.5.1" />
