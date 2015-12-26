@@ -64,7 +64,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Rocket.Routing.IoC.StructureMap.1.0.1.0.nuspec" />
+    <None Include="Rocket.Routing.IoC.StructureMap.1.0.1.1.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Rocket\Rocket.Core\Rocket.Core.csproj">

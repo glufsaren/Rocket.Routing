@@ -2,18 +2,18 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
 	<metadata>
 		<id>Rocket.Routing</id>
-		<version>1.0.1.0</version>
+		<version>1.0.1.1</version>
 		<title>Rocket.Routing</title>
 		<authors>John Tjust</authors>
 		<owners>John Tjust</owners>
 		<licenseUrl>http://apache.org/licenses/LICENSE-2.0</licenseUrl>
-		<projectUrl>https://bitbucket.org/glufsaren/rocket.routing/overview</projectUrl>
-		<iconUrl>https://bytebucket.org/glufsaren/rocket.routing/raw/535fc843fd39a99a8426bac4c1cd3e0bc9a4d99c/Logo_icon.png</iconUrl>
+		<projectUrl>https://github.com/glufsaren/Rocket.Routing</projectUrl>
+		<iconUrl>https://raw.githubusercontent.com/glufsaren/Rocket.Routing/master/Logo_icon.png</iconUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>Simple REST versioning library</description>
 		<releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
-		<copyright>Copyright 2015</copyright>
-		<tags>REST Versioning VersionConstraint Web API VersionedRoute VersionedRouteAttribute</tags>
+		<copyright>Copyright 2016</copyright>
+		<tags>REST Versioning Versioned Route Attribute VersionConstraint Web API VersionedRoute VersionedRouteAttribute</tags>
 		<dependencies>
 			<dependency id="Microsoft.AspNet.WebApi.WebHost" version="5.2.3" />
 			<dependency id="log4net" version="2.0.3" />
