@@ -5,7 +5,7 @@ Rocket.Routing uses a route constraint in order to enable versioning of REST API
 ## Quick summary ##
 
 * Verision 1.0.0.0
-* [Repository](https://bitbucket.org/glufsaren/rocket.routing/)
+* [Repository](https://github.com/glufsaren/Rocket.Routing)
 
 ## Configuration ##
 
