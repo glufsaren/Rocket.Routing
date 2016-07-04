@@ -29,7 +29,7 @@ namespace Rocket.Routing.Test.Component
         public class When_wrong_vendor_is_specified_in_accept_header : BaseComponentTest
         {
             private Result<string> _result;
-            private HttpServerHost _httpServerHostHost;
+            private ApiHost _apiHost;
             private string _requestIdHeader;
             private Dictionary<string, string> _headers;
 
@@ -43,19 +43,18 @@ namespace Rocket.Routing.Test.Component
                                       }
                                   };
 
-                _httpServerHostHost = new HttpServerHostBuilder()
-                    .AddDependencyResolver(httpServerHost => new AutofacConfig(httpServerHost))
-                    .Endpoint("http://localhost:1000/api/orders/")
-                    .MapRoute<OrderController>("api/orders");
+                _apiHost = new ApiHostBuilder()
+                    .Resolver(new AutofacConfig())
+                    .On<OrderController>("http://localhost:1000/api/orders/")
+                    .Endpoint();
 
                 Bootstrapper.Initialize(
-                    _httpServerHostHost.HttpConfiguration);
+                    _apiHost.HttpConfiguration);
             }
 
             protected override void Act()
             {
-                _result = _httpServerHostHost.Execute<string>(
-                    HttpMethod.Get, headers: _headers);
+                _result = _apiHost.Get<string>(headers: _headers);
             }
 
             protected override void Assemble()
@@ -66,7 +65,7 @@ namespace Rocket.Routing.Test.Component
 
             protected override void TearDown()
             {
-                _httpServerHostHost.Dispose();
+                _apiHost.Dispose();
                 Bootstrapper.Reset();
             }
 

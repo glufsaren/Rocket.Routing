@@ -14,24 +14,14 @@ using System.Web.Http.Dependencies;
 using Autofac;
 using Autofac.Integration.WebApi;
 
-using Rocket.Routing.IoC.Autofac;
 using Rocket.Routing.Services.Contracts;
 using Rocket.Test;
 
 namespace Rocket.Routing.Test.Component
 {
-    public class AutofacConfig : IDependencyResolverConfig
+    public class AutofacConfig : IDependencyConfiguration
     {
-        private readonly HttpServerHost _httpServerHost;
-
-        public AutofacConfig(HttpServerHost httpServerHost)
-        {
-            _httpServerHost = httpServerHost;
-        }
-
-        public HttpConfiguration HttpConfiguration { private get; set; }
-
-        public IDependencyResolver Configure()
+        public IDependencyResolver Configure(ApiHost httpServerHost)
         {
             var builder = new ContainerBuilder();
 
@@ -45,7 +35,7 @@ namespace Rocket.Routing.Test.Component
                 .Where(t => !t.IsAbstract && typeof(ApiController).IsAssignableFrom(t));
 
             builder
-                .Register(o => new SelfHostHttpRequestMessageResolver(_httpServerHost))
+                .Register(o => new SelfHostHttpRequestMessageResolver(httpServerHost))
                 .As<IHttpRequestMessageResolverService>();
 
             var container = builder.Build();

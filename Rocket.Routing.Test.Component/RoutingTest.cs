@@ -10,7 +10,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
 
 using NUnit.Framework;
 
@@ -29,25 +28,24 @@ namespace Rocket.Routing.Test.Component
         public class When_no_accept_header_is_specified_and_latest_is_specified : BaseComponentTest
         {
             private Result<string> _result;
-            private HttpServerHost _httpServerHostHost;
+            private ApiHost _apiHost;
             private string _mediaTypeHeader;
             private string _requestIdHeader;
 
             protected override void Arrange()
             {
-                _httpServerHostHost = new HttpServerHostBuilder()
-                    .AddDependencyResolver(httpServerHost => new AutofacConfig(httpServerHost))
-                    .Endpoint("http://localhost:1000/api/orders/")
-                    .MapRoute<OrderController>("api/orders");
+                _apiHost = new ApiHostBuilder()
+                    .Resolver(new AutofacConfig())
+                    .On<OrderController>("http://localhost:1000/api/orders/")
+                    .Endpoint();
 
                 Bootstrapper.Initialize(
-                    _httpServerHostHost.HttpConfiguration);
+                    _apiHost.HttpConfiguration);
             }
 
             protected override void Act()
             {
-                _result = _httpServerHostHost
-                    .Execute<string>(HttpMethod.Get);
+                _result = _apiHost.Get<string>();
             }
 
             protected override void Assemble()
@@ -61,7 +59,7 @@ namespace Rocket.Routing.Test.Component
 
             protected override void TearDown()
             {
-                _httpServerHostHost.Dispose();
+                _apiHost.Dispose();
                 Bootstrapper.Reset();
             }
 
@@ -95,7 +93,7 @@ namespace Rocket.Routing.Test.Component
         public class When_a_specific_accept_header_is_specified : BaseComponentTest
         {
             private Result<string> _result;
-            private HttpServerHost _httpServerHostHost;
+            private ApiHost _apiHost;
             private string _mediaTypeHeader;
             private string _requestIdHeader;
             private Dictionary<string, string> _headers;
@@ -110,19 +108,18 @@ namespace Rocket.Routing.Test.Component
                                       }
                                   };
 
-                _httpServerHostHost = new HttpServerHostBuilder()
-                    .AddDependencyResolver(httpServerHost => new AutofacConfig(httpServerHost))
-                    .Endpoint("http://localhost:1000/api/orders/")
-                    .MapRoute<OrderController>("api/orders");
+                _apiHost = new ApiHostBuilder()
+                    .Resolver(new AutofacConfig())
+                    .On<OrderController>("http://localhost:1000/api/orders/")
+                    .Endpoint();
 
                 Bootstrapper.Initialize(
-                    _httpServerHostHost.HttpConfiguration);
+                    _apiHost.HttpConfiguration);
             }
 
             protected override void Act()
             {
-                _result = _httpServerHostHost.Execute<string>(
-                    HttpMethod.Get, headers: _headers);
+                _result = _apiHost.Get<string>(headers: _headers);
             }
 
             protected override void Assemble()
@@ -136,7 +133,7 @@ namespace Rocket.Routing.Test.Component
 
             protected override void TearDown()
             {
-                _httpServerHostHost.Dispose();
+                _apiHost.Dispose();
                 Bootstrapper.Reset();
             }
 
@@ -165,12 +162,12 @@ namespace Rocket.Routing.Test.Component
                 _requestIdHeader.ShouldNotEqual(Guid.Empty.ToString());
             }
         }
- 
+
         [TestFixture]
         public class When_an_ordinary_accept_header_is_specified : BaseComponentTest
         {
             private Result<string> _result;
-            private HttpServerHost _httpServerHostHost;
+            private ApiHost _apiHost;
             private string _mediaTypeHeader;
             private string _requestIdHeader;
             private Dictionary<string, string> _headers;
@@ -185,20 +182,19 @@ namespace Rocket.Routing.Test.Component
                                       }
                                   };
 
-                _httpServerHostHost =
-                    new HttpServerHostBuilder().AddDependencyResolver(
-                        httpServerHost => new AutofacConfig(httpServerHost))
-                        .Endpoint("http://localhost:1000/api/orders/")
-                        .MapRoute<OrderController>("api/orders");
+                _apiHost =
+                    new ApiHostBuilder()
+                    .Resolver(new AutofacConfig())
+                        .On<OrderController>("http://localhost:1000/api/orders/")
+                        .Endpoint();
 
                 Bootstrapper.Initialize(
-                    _httpServerHostHost.HttpConfiguration);
+                    _apiHost.HttpConfiguration);
             }
 
             protected override void Act()
             {
-                _result = _httpServerHostHost.Execute<string>(
-                    HttpMethod.Get, headers: _headers);
+                _result = _apiHost.Get<string>(headers: _headers);
             }
 
             protected override void Assemble()
@@ -212,7 +208,7 @@ namespace Rocket.Routing.Test.Component
 
             protected override void TearDown()
             {
-                _httpServerHostHost.Dispose();
+                _apiHost.Dispose();
                 Bootstrapper.Reset();
             }
 
@@ -241,12 +237,12 @@ namespace Rocket.Routing.Test.Component
                 _requestIdHeader.ShouldNotEqual(Guid.Empty.ToString());
             }
         }
- 
+
         [TestFixture]
         public class When_an_empty_accept_header_is_specified : BaseComponentTest
         {
             private Result<string> _result;
-            private HttpServerHost _httpServerHostHost;
+            private ApiHost _apiHost;
             private string _mediaTypeHeader;
             private string _requestIdHeader;
             private Dictionary<string, string> _headers;
@@ -261,19 +257,18 @@ namespace Rocket.Routing.Test.Component
                                       }
                                   };
 
-                _httpServerHostHost = new HttpServerHostBuilder()
-                    .AddDependencyResolver(httpServerHost => new AutofacConfig(httpServerHost))
-                    .Endpoint("http://localhost:1000/api/orders/")
-                    .MapRoute<OrderController>("api/orders");
+                _apiHost = new ApiHostBuilder()
+                    .Resolver(new AutofacConfig())
+                    .On<OrderController>("http://localhost:1000/api/orders/")
+                    .Endpoint();
 
                 Bootstrapper.Initialize(
-                    _httpServerHostHost.HttpConfiguration);
+                    _apiHost.HttpConfiguration);
             }
 
             protected override void Act()
             {
-                _result = _httpServerHostHost.Execute<string>(
-                    HttpMethod.Get, headers: _headers);
+                _result = _apiHost.Get<string>(headers: _headers);
             }
 
             protected override void Assemble()
@@ -287,7 +282,7 @@ namespace Rocket.Routing.Test.Component
 
             protected override void TearDown()
             {
-                _httpServerHostHost.Dispose();
+                _apiHost.Dispose();
                 Bootstrapper.Reset();
             }
 
@@ -321,7 +316,7 @@ namespace Rocket.Routing.Test.Component
         public class When_no_content_type_or_version_are_specified : BaseComponentTest
         {
             private Result<string> _result;
-            private HttpServerHost _httpServerHostHost;
+            private ApiHost _apiHost;
             private string _mediaTypeHeader;
             private string _requestIdHeader;
             private Dictionary<string, string> _headers;
@@ -336,19 +331,18 @@ namespace Rocket.Routing.Test.Component
                                       }
                                   };
 
-                _httpServerHostHost = new HttpServerHostBuilder()
-                    .AddDependencyResolver(httpServerHost => new AutofacConfig(httpServerHost))
-                    .Endpoint("http://localhost:1000/api/orders/")
-                    .MapRoute<OrderController>("api/orders");
+                _apiHost = new ApiHostBuilder()
+                    .Resolver(new AutofacConfig())
+                    .On<OrderController>("http://localhost:1000/api/orders/")
+                    .Endpoint();
 
                 Bootstrapper.Initialize(
-                    _httpServerHostHost.HttpConfiguration);
+                    _apiHost.HttpConfiguration);
             }
 
             protected override void Act()
             {
-                _result = _httpServerHostHost.Execute<string>(
-                    HttpMethod.Get, headers: _headers);
+                _result = _apiHost.Get<string>(headers: _headers);
             }
 
             protected override void Assemble()
@@ -362,7 +356,7 @@ namespace Rocket.Routing.Test.Component
 
             protected override void TearDown()
             {
-                _httpServerHostHost.Dispose();
+                _apiHost.Dispose();
                 Bootstrapper.Reset();
             }
 
@@ -396,7 +390,7 @@ namespace Rocket.Routing.Test.Component
         public class When_an_invalid_accept_header_is_specified : BaseComponentTest
         {
             private Result<string> _result;
-            private HttpServerHost _httpServerHostHost;
+            private ApiHost _apiHost;
             private string _requestIdHeader;
             private Dictionary<string, string> _headers;
 
@@ -410,19 +404,18 @@ namespace Rocket.Routing.Test.Component
                                       }
                                   };
 
-                _httpServerHostHost = new HttpServerHostBuilder()
-                    .AddDependencyResolver(httpServerHost => new AutofacConfig(httpServerHost))
-                    .Endpoint("http://localhost:1000/api/orders/")
-                    .MapRoute<OrderController>("api/orders");
+                _apiHost = new ApiHostBuilder()
+                    .Resolver(new AutofacConfig())
+                    .On<OrderController>("http://localhost:1000/api/orders/")
+                    .Endpoint();
 
                 Bootstrapper.Initialize(
-                    _httpServerHostHost.HttpConfiguration);
+                    _apiHost.HttpConfiguration);
             }
 
             protected override void Act()
             {
-                _result = _httpServerHostHost.Execute<string>(
-                    HttpMethod.Get, headers: _headers);
+                _result = _apiHost.Get<string>(headers: _headers);
             }
 
             protected override void Assemble()
@@ -433,7 +426,7 @@ namespace Rocket.Routing.Test.Component
 
             protected override void TearDown()
             {
-                _httpServerHostHost.Dispose();
+                _apiHost.Dispose();
                 Bootstrapper.Reset();
             }
 

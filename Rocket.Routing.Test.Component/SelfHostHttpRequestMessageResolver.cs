@@ -16,9 +16,9 @@ namespace Rocket.Routing.Test.Component
 {
     public class SelfHostHttpRequestMessageResolver : IHttpRequestMessageResolverService
     {
-        private readonly HttpServerHost _httpServerHost;
+        private readonly ApiHost _httpServerHost;
 
-        public SelfHostHttpRequestMessageResolver(HttpServerHost httpServerHost)
+        public SelfHostHttpRequestMessageResolver(ApiHost httpServerHost)
         {
             _httpServerHost = httpServerHost;
         }
